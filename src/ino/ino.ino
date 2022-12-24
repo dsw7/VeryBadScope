@@ -5,11 +5,18 @@ void setup()
 {
     Serial.begin(BAUD_RATE);
     Serial.setTimeout(MAX_TIME_MILLISEC_WAIT_SERIAL_DATA);
+    pinMode(LED_BUILTIN, OUTPUT);
 }
 
-void do_something(const String &message)
+void run_blink()
 {
-    Serial.println(message);
+    for (unsigned int i = 0; i < 5; ++i)
+    {
+        digitalWrite(LED_BUILTIN, HIGH);
+        delay(500);
+        digitalWrite(LED_BUILTIN, LOW);
+        delay(500);
+    }
 }
 
 void loop()
@@ -19,13 +26,14 @@ void loop()
         String message = Serial.readString();
         message.trim();
 
-        if (message == "exit")
+        if (message == "test")
         {
-            Serial.println("exiting...");
+            run_blink();
         }
-        else if (message == "read")
+        else if (message == "exit")
         {
-            do_something(message);
+            Serial.end();
+            break;
         }
         else
         {
