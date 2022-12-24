@@ -8,14 +8,17 @@ void setup()
     pinMode(LED_BUILTIN, OUTPUT);
 }
 
-void run_blink()
+void run_connection_test()
 {
+    Serial.println("Hello from InoDAQ2. I should blink 5 times!");
+    Serial.flush();
+
     for (unsigned int i = 0; i < 5; ++i)
     {
         digitalWrite(LED_BUILTIN, HIGH);
-        delay(500);
+        delay(100);
         digitalWrite(LED_BUILTIN, LOW);
-        delay(500);
+        delay(100);
     }
 }
 
@@ -26,9 +29,9 @@ void loop()
         String message = Serial.readString();
         message.trim();
 
-        if (message == "test")
+        if (message == "hello")
         {
-            run_blink();
+            run_connection_test();
         }
         else if (message == "exit")
         {
@@ -38,6 +41,7 @@ void loop()
         else
         {
             Serial.println(message);
+            Serial.flush();
         }
     }
 }
