@@ -4,6 +4,8 @@ LIGHT_PURPLE = "\033[1;1;35m"
 NO_COLOR = "\033[0m"
 FULLY_QUALIFIED_BOARD_NAME = arduino:avr:uno
 PATH_INO_SRC = src/ino
+BUILD_PATH = $(TMP)/inodaq2-build/
+CORE_CACHE_PATH = $(TMP)/inodaq2-core-cache/
 
 define MESSAGE
 	@echo -e $(LIGHT_PURPLE)\> $(1)$(NO_COLOR)
@@ -29,9 +31,20 @@ ifndef SERIAL_PORT
 endif
 
 compile: check-env
-	$(call MESSAGE,Compiling hardware control layer code)
-	@arduino-cli compile --port $(SERIAL_PORT) --fqbn $(FULLY_QUALIFIED_BOARD_NAME) --verbose $(PATH_INO_SRC)/
+	$(call MESSAGE,Compiling Arduino code)
+	@arduino-cli compile \
+	--port $(SERIAL_PORT) \
+	--fqbn $(FULLY_QUALIFIED_BOARD_NAME) \
+	--verbose \
+	--build-path=$(BUILD_PATH) \
+	--build-cache-path=$(CORE_CACHE_PATH) \
+	$(PATH_INO_SRC)/
 
-upload: check-env
-	$(call MESSAGE,Uploading hardware control layer code)
-	@arduino-cli upload --port $(SERIAL_PORT) --fqbn $(FULLY_QUALIFIED_BOARD_NAME) --verbose $(PATH_INO_SRC)/
+upload: compile
+	$(call MESSAGE,Uploading Arduino code)
+	@arduino-cli upload \
+	--port $(SERIAL_PORT) \
+	--fqbn $(FULLY_QUALIFIED_BOARD_NAME) \
+	--verbose \
+	--input-dir=$(BUILD_PATH) \
+	$(PATH_INO_SRC)/
