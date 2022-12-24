@@ -1,12 +1,8 @@
 const unsigned int BAUD_RATE = 9600;
 const unsigned int MAX_TIME_MILLISEC_WAIT_SERIAL_DATA = 10;
 
-void setup()
+namespace Core
 {
-    Serial.begin(BAUD_RATE);
-    Serial.setTimeout(MAX_TIME_MILLISEC_WAIT_SERIAL_DATA);
-    pinMode(LED_BUILTIN, OUTPUT);
-}
 
 void run_connection_test()
 {
@@ -35,6 +31,15 @@ void handle_unknown_command(const String &command)
     Serial.flush();
 }
 
+} // namespace Core
+
+void setup()
+{
+    Serial.begin(::BAUD_RATE);
+    Serial.setTimeout(::MAX_TIME_MILLISEC_WAIT_SERIAL_DATA);
+    pinMode(LED_BUILTIN, OUTPUT);
+}
+
 void loop()
 {
     while (Serial.available() > 0)
@@ -44,16 +49,16 @@ void loop()
 
         if (command == "hello")
         {
-            run_connection_test();
+            Core::run_connection_test();
         }
         else if (command == "exit")
         {
-            exit_program();
+            Core::exit_program();
             break;
         }
         else
         {
-            handle_unknown_command(command);
+            Core::handle_unknown_command(command);
         }
     }
 }
