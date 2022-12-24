@@ -1,29 +1,35 @@
-const unsigned int MAX_SIZE_MSG = 12;
+const unsigned int BAUD_RATE = 9600;
+const unsigned int MAX_TIME_MILLISEC_WAIT_SERIAL_DATA = 10;
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(BAUD_RATE);
+    Serial.setTimeout(MAX_TIME_MILLISEC_WAIT_SERIAL_DATA);
+}
+
+void do_something(const String &message)
+{
+    Serial.println(message);
 }
 
 void loop()
 {
     while (Serial.available() > 0)
     {
-        static char msg[MAX_SIZE_MSG];
-        static unsigned int idx = 0;
+        String message = Serial.readString();
+        message.trim();
 
-        char inc = Serial.read();
-
-        if ((inc != '\n') and (idx < MAX_SIZE_MSG - 1))
+        if (message == "exit")
         {
-            msg[idx] = inc;
-            idx++;
+            Serial.println("exiting...");
+        }
+        else if (message == "read")
+        {
+            do_something(message);
         }
         else
         {
-            msg[idx] = '\0';
-            Serial.println(msg);
-            idx = 0;
+            Serial.println(message);
         }
     }
 }
