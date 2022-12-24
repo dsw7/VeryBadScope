@@ -22,26 +22,38 @@ void run_connection_test()
     }
 }
 
+void exit_program()
+{
+    Serial.println("Closing connection. Goodbye!");
+    Serial.flush();
+    Serial.end();
+}
+
+void handle_unknown_command(const String &command)
+{
+    Serial.println("Unknown command: " + command);
+    Serial.flush();
+}
+
 void loop()
 {
     while (Serial.available() > 0)
     {
-        String message = Serial.readString();
-        message.trim();
+        String command = Serial.readString();
+        command.trim();
 
-        if (message == "hello")
+        if (command == "hello")
         {
             run_connection_test();
         }
-        else if (message == "exit")
+        else if (command == "exit")
         {
-            Serial.end();
+            exit_program();
             break;
         }
         else
         {
-            Serial.println(message);
-            Serial.flush();
+            handle_unknown_command(command);
         }
     }
 }
