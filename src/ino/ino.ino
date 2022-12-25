@@ -18,6 +18,44 @@ void run_connection_test()
     }
 }
 
+void read_analog_pin(const String &command)
+{
+    if (command.length() < 6)
+    {
+        ::Serial.println("Invalid input!");
+        ::Serial.flush();
+        return;
+    }
+
+    long num_reads = command.substring(command.indexOf(':') + 1).toInt();
+
+    if (num_reads == 0)
+    {
+        ::Serial.println("Could not parse number of reads!");
+        ::Serial.flush();
+        return;
+    }
+    else if (num_reads < 0)
+    {
+        ::Serial.println("Parsed a negative number of reads!");
+        ::Serial.flush();
+        return;
+    }
+
+    static unsigned int read_pin = A0;
+
+    // On UNO, it takes about one hundred microseconds to read analog input
+    // See: https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/
+    static unsigned int delay_read = 100;
+
+    for (unsigned int i = 0; i < num_reads; ++i)
+    {
+        ::Serial.println(::analogRead(A0));
+        ::delayMicroseconds(delay_read);
+    }
+    ::Serial.flush();
+}
+
 void exit_program()
 {
     ::Serial.println("Closing connection. Goodbye!");
@@ -50,6 +88,10 @@ void loop()
         if (command == "hello")
         {
             Core::run_connection_test();
+        }
+        else if (command.startsWith("read:"))
+        {
+            Core::read_analog_pin(command);
         }
         else if (command == "exit")
         {
