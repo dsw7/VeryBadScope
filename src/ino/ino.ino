@@ -43,6 +43,7 @@ void read_analog_pin(const String &command)
     }
 
     static unsigned int read_pin = A0;
+    unsigned int read_results[num_reads];
 
     // On UNO, it takes about one hundred microseconds to read analog input
     // See: https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/
@@ -50,9 +51,17 @@ void read_analog_pin(const String &command)
 
     for (unsigned int i = 0; i < num_reads; ++i)
     {
-        ::Serial.println(::analogRead(A0));
+        read_results[i] = ::analogRead(A0);
         ::delayMicroseconds(delay_read);
     }
+
+    for (unsigned int i = 0; i < num_reads; ++i)
+    {
+        ::Serial.print(read_results[i]);
+        ::Serial.print(' ');
+    }
+
+    ::Serial.println();
     ::Serial.flush();
 }
 
