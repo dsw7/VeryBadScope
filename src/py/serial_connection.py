@@ -56,6 +56,9 @@ class SerialConnection:
         logging.debug('Closing connection!')
 
         if self.serial_port_obj.is_open:
+
+            self.send_message(b'exit')
+            self.receive_message()
             self.serial_port_obj.close()
 
     def send_message(self: T, message: bytes) -> None:
