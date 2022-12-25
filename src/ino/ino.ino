@@ -44,7 +44,7 @@ void loop()
 {
     while (::Serial.available() > 0)
     {
-        String command = ::Serial.readString();
+        ::String command = ::Serial.readString();
         command.trim();
 
         if (command == "hello")
