@@ -28,7 +28,8 @@ def read(obj: Dict[str, Union[bool, str]], count: str) -> None:
     with SerialConnection(**obj) as connection:
         start = perf_counter_ns()
         connection.send_message(f'read:{count}'.encode())
-        connection.receive_message()
+        connection.receive_message() # voltages
+        connection.receive_message() # times
 
         end = (perf_counter_ns() - start) / 1_000_000
         click.secho(f'> Round trip time: {end} ms', fg='yellow')
