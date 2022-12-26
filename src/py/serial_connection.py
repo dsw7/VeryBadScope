@@ -23,7 +23,7 @@ class SerialConnection:
 
         configs = {
             'level': level,
-            'format': '%(asctime)s %(message)s',
+            'format': '%(asctime)s.%(msecs)03d %(message)s',
             'datefmt': '%Y-%m-%d %I:%M:%S'
         }
 
