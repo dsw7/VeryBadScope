@@ -1,4 +1,4 @@
-const unsigned int BAUD_RATE = 9600;
+const unsigned int BAUD_RATE = 19200;
 const unsigned int MAX_TIME_MILLISEC_WAIT_SERIAL_DATA = 10;
 
 namespace Core

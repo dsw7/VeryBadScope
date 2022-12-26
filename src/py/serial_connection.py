@@ -5,7 +5,7 @@ from json import dumps
 from typing import TypeVar
 import serial
 
-BAUD_RATE = 9600
+BAUD_RATE = 19200
 T = TypeVar('T')
 
 
@@ -91,5 +91,10 @@ class SerialConnection:
             bytes_from_dev = self.serial_port_obj.read_until()  # Reads until \n by default
             message_received = True
 
-        self.logger.debug('Received message: %s', bytes_from_dev)
+        if len(bytes_from_dev) > 40:
+            self.logger.debug('Received message: %s...', bytes_from_dev[:40])
+            self.logger.debug('Message was truncated due to excessive length')
+        else:
+            self.logger.debug('Received message: %s', bytes_from_dev)
+
         return bytes_from_dev
