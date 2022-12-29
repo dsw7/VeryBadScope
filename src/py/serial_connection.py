@@ -2,7 +2,10 @@ import sys
 import logging
 from time import sleep
 from json import dumps
-from typing import TypeVar, Tuple
+from typing import TypeVar
+from typing import Tuple
+from typing import Dict
+from typing import Union
 import serial
 
 BAUD_RATE = 19200
@@ -11,12 +14,12 @@ T = TypeVar('T')
 
 class SerialConnection:
 
-    def __init__(self: T, port: str, debug: bool) -> T:
+    def __init__(self: T, **cli_params: Dict[str, Union[str, bool]]) -> T:
 
         self.serial_port_obj = None
-        self.port = port
+        self.port = cli_params['port']
 
-        if debug:
+        if cli_params['debug']:
             level = logging.DEBUG
         else:
             level = logging.INFO
