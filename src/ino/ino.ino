@@ -35,7 +35,7 @@ void read_analog_pin(const String &command)
 
     if (command.length() < 6)
     {
-        error("Invalid input!");
+        error("Malformed read command!");
         return;
     }
 

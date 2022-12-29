@@ -49,6 +49,6 @@ upload: compile
 	--input-dir=$(BUILD_PATH) \
 	$(PATH_INO_SRC)/
 
-test:
+test: upload
 	$(call MESSAGE,Running unit tests)
 	@python3 -m pytest --verbose --capture=no .
