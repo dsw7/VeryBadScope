@@ -19,7 +19,7 @@ def hello(obj: Dict[str, Union[bool, str]]) -> None:
 @click.option('-r', '--time-range', default=1000, help='Specify time range to read over', metavar='<microseconds>')
 @click.pass_obj
 def read(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
-    commands.command_hello(**obj, **options)
+    commands.command_read(**obj, **options)
 
 if __name__ == '__main__':
     main()

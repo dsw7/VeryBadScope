@@ -13,8 +13,8 @@ def command_hello(**cli_params: Dict[str, Union[bool, str]]) -> None:
         connection.send_message('hello')
         rv, error = connection.receive_message()
 
-    if not rv:
-        sys.exit(f'Command failed with error: "{error}"')
+        if not rv:
+            sys.exit(error)
 
 def command_read(**cli_params: Dict[str, Union[bool, str]]) -> None:
 
@@ -24,10 +24,17 @@ def command_read(**cli_params: Dict[str, Union[bool, str]]) -> None:
     time_range = cli_params['time_range']
 
     with SerialConnection(**cli_params) as connection:
+
         start = perf_counter_ns()
         connection.send_message(f'read:{count}:{time_range}')
-        connection.receive_message() # voltages
-        connection.receive_message() # times
+
+        rv, result = connection.receive_message() # voltages
+        if not rv:
+            sys.exit(result)
+
+        rv, result = connection.receive_message() # times
+        if not rv:
+            sys.exit(result)
 
         end = (perf_counter_ns() - start) / 1_000_000
         secho(f'> Round trip time: {end} ms', fg='yellow')
