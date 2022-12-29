@@ -10,6 +10,7 @@ import serial
 
 BAUD_RATE = 19200
 T = TypeVar('T')
+ENCODING = 'utf-8'
 
 
 class SerialConnection:
@@ -72,13 +73,14 @@ class SerialConnection:
 
         if self.serial_port_obj.is_open:
 
-            self.send_message(b'exit')
+            self.send_message('exit')
             self.receive_message()
             self.serial_port_obj.close()
 
-    def send_message(self: T, message: bytes) -> None:
+    def send_message(self: T, message: str) -> None:
 
         self.logger.debug('Sending message: "%s"', message)
+        message = message.encode(encoding=ENCODING)
         self.logger.debug('Sent %i bytes', self.serial_port_obj.write(message))
 
     def receive_message(self: T) -> Tuple[bool, str]:
@@ -100,7 +102,7 @@ class SerialConnection:
         else:
             self.logger.debug('Received message: %s', bytes_from_dev)
 
-        results = bytes_from_dev.decode().strip()
+        results = bytes_from_dev.decode(ENCODING).strip()
         status, message = results.split(';')
 
         return int(status) == 1, message

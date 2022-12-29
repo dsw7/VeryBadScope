@@ -10,7 +10,7 @@ def command_hello(**cli_params: Dict[str, Union[bool, str]]) -> None:
     rv = False
 
     with SerialConnection(**cli_params) as connection:
-        connection.send_message(b'hello')
+        connection.send_message('hello')
         rv, error = connection.receive_message()
 
     if not rv:
@@ -25,7 +25,7 @@ def command_read(**cli_params: Dict[str, Union[bool, str]]) -> None:
 
     with SerialConnection(**cli_params) as connection:
         start = perf_counter_ns()
-        connection.send_message(f'read:{count}:{time_range}'.encode())
+        connection.send_message(f'read:{count}:{time_range}')
         connection.receive_message() # voltages
         connection.receive_message() # times
 
