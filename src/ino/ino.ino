@@ -4,9 +4,21 @@ const unsigned int MAX_TIME_MILLISEC_WAIT_SERIAL_DATA = 10;
 namespace Core
 {
 
+void info(const String &message)
+{
+    ::Serial.println("0;" + message);
+    ::Serial.flush();
+}
+
+void error(const String &message)
+{
+    ::Serial.println("1;" + message);
+    ::Serial.flush();
+}
+
 void run_connection_test()
 {
-    ::Serial.println("Hello from InoDAQ2. I should blink 5 times!");
+    info("Hello from InoDAQ2. I should blink 5 times!");
     ::Serial.flush();
 
     for (unsigned int i = 0; i < 5; ++i)
@@ -24,8 +36,7 @@ void read_analog_pin(const String &command)
 
     if (command.length() < 6)
     {
-        ::Serial.println("Invalid input!");
-        ::Serial.flush();
+        error("Invalid input!");
         return;
     }
 
@@ -36,13 +47,13 @@ void read_analog_pin(const String &command)
 
     if (n_reads == 0)
     {
-        ::Serial.println("Could not parse number of reads!");
+        error("Could not parse number of reads!");
         ::Serial.flush();
         return;
     }
     else if (n_reads < 5)
     {
-        ::Serial.println("Minimum of 5 reads required!");
+        error("Minimum of 5 reads required!");
         ::Serial.flush();
         return;
     }
@@ -51,13 +62,13 @@ void read_analog_pin(const String &command)
 
     if (range == 0)
     {
-        ::Serial.println("Could not parse range!");
+        error("Could not parse range!");
         ::Serial.flush();
         return;
     }
     else if (range < 1000)
     {
-        ::Serial.println("Minimum range is 1000 microseconds!");
+        error("Minimum range is 1000 microseconds!");
         ::Serial.flush();
         return;
     }
@@ -76,13 +87,13 @@ void read_analog_pin(const String &command)
     // For a description of these magic numbers
     if (period < 3)
     {
-        ::Serial.println("Computed period is too short. Try a greater range to count ratio!");
+        error("Computed period is too short. Try a greater range to count ratio!");
         ::Serial.flush();
         return;
     }
     else if (period > 16383)
     {
-        ::Serial.println("Computed period is too long. Try a lesser range to count ratio!");
+        error("Computed period is too long. Try a lesser range to count ratio!");
         ::Serial.flush();
         return;
     }
@@ -115,14 +126,14 @@ void read_analog_pin(const String &command)
 
 void exit_program()
 {
-    ::Serial.println("Closing connection. Goodbye!");
+    info("Closing connection. Goodbye!");
     ::Serial.flush();
     ::Serial.end();
 }
 
 void handle_unknown_command(const String &command)
 {
-    ::Serial.println("Unknown command: " + command);
+    error("Unknown command: " + command);
     ::Serial.flush();
 }
 
