@@ -48,13 +48,11 @@ void read_analog_pin(const String &command)
     if (n_reads == 0)
     {
         error("Could not parse number of reads!");
-        ::Serial.flush();
         return;
     }
     else if (n_reads < 5)
     {
         error("Minimum of 5 reads required!");
-        ::Serial.flush();
         return;
     }
 
@@ -63,13 +61,11 @@ void read_analog_pin(const String &command)
     if (range == 0)
     {
         error("Could not parse range!");
-        ::Serial.flush();
         return;
     }
     else if (range < 1000)
     {
         error("Minimum range is 1000 microseconds!");
-        ::Serial.flush();
         return;
     }
 
@@ -88,13 +84,11 @@ void read_analog_pin(const String &command)
     if (period < 3)
     {
         error("Computed period is too short. Try a greater range to count ratio!");
-        ::Serial.flush();
         return;
     }
     else if (period > 16383)
     {
         error("Computed period is too long. Try a lesser range to count ratio!");
-        ::Serial.flush();
         return;
     }
 
@@ -129,14 +123,12 @@ void read_analog_pin(const String &command)
 void exit_program()
 {
     info("Closing connection. Goodbye!");
-    ::Serial.flush();
     ::Serial.end();
 }
 
 void handle_unknown_command(const String &command)
 {
     error("Unknown command: " + command);
-    ::Serial.flush();
 }
 
 } // namespace Core
