@@ -19,7 +19,6 @@ void error(const String &message)
 void run_connection_test()
 {
     info("Hello from InoDAQ2. I should blink 5 times!");
-    ::Serial.flush();
 
     for (unsigned int i = 0; i < 5; ++i)
     {
