@@ -21,13 +21,14 @@ def hello(obj: Dict[str, Union[bool, str]]) -> None:
 
 @main.command(help='Collect a trace')
 @click.option('-n', '--count', default=5, help='Specify number of reads', metavar='<num-reads>')
+@click.option('-r', '--time-range', default=1000, help='Specify time range to read over', metavar='<microseconds>')
 @click.pass_obj
-def read(obj: Dict[str, Union[bool, str]], count: str) -> None:
+def read(obj: Dict[str, Union[bool, str]], count: str, time_range: str) -> None:
     click.secho('> Reading data from device', fg='yellow')
 
     with SerialConnection(**obj) as connection:
         start = perf_counter_ns()
-        connection.send_message(f'read:{count}'.encode())
+        connection.send_message(f'read:{count}:{time_range}'.encode())
         connection.receive_message() # voltages
         connection.receive_message() # times
 

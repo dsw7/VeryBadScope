@@ -20,7 +20,7 @@ void run_connection_test()
 
 void read_analog_pin(const String &command)
 {
-    // Command should be of form: read:<num-reads>:<time-range>
+    // Command should be of form: read:<num-reads>:<range-in-usecs>
 
     if (command.length() < 6)
     {
@@ -47,6 +47,21 @@ void read_analog_pin(const String &command)
         return;
     }
 
+    long range = command.substring(idx_col_2 + 1).toInt();
+
+    if (range == 0)
+    {
+        ::Serial.println("Could not parse range!");
+        ::Serial.flush();
+        return;
+    }
+    else if (range < 0)
+    {
+        ::Serial.println("Parsed a negative range!");
+        ::Serial.flush();
+        return;
+    }
+
     static unsigned int read_pin = A0;
 
     unsigned int read_results[n_reads];
@@ -54,15 +69,16 @@ void read_analog_pin(const String &command)
 
     // On UNO, it takes about one hundred microseconds to read analog input
     // See: https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/
-    static unsigned int delay_read = 100;
+    // From my experimentation, the read time delay is 112 usecs
+    static unsigned long period = (range / n_reads) - 112;
 
     unsigned long start_time = ::micros();
 
     for (unsigned int i = 0; i < n_reads; ++i)
     {
         read_results[i] = ::analogRead(A0);
-        read_times_usec[i] = ::micros(); // note that micros is slow
-        ::delayMicroseconds(delay_read);
+        read_times_usec[i] = ::micros();
+        ::delayMicroseconds(period);
     }
 
     for (unsigned int i = 0; i < n_reads; ++i)
