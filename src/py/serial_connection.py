@@ -2,7 +2,7 @@ import sys
 import logging
 from time import sleep
 from json import dumps
-from typing import TypeVar
+from typing import TypeVar, Tuple
 import serial
 
 BAUD_RATE = 19200
@@ -78,7 +78,7 @@ class SerialConnection:
         self.logger.debug('Sending message: "%s"', message)
         self.logger.debug('Sent %i bytes', self.serial_port_obj.write(message))
 
-    def receive_message(self: T) -> bytes:
+    def receive_message(self: T) -> Tuple[bool, str]:
 
         self.logger.debug('Waiting to receive message...')
         message_received = False
@@ -97,4 +97,7 @@ class SerialConnection:
         else:
             self.logger.debug('Received message: %s', bytes_from_dev)
 
-        return bytes_from_dev
+        results = bytes_from_dev.decode().strip()
+        status, message = results.split(';')
+
+        return int(status) == 1, message

@@ -2,6 +2,7 @@ from typing import Dict, Union
 from time import perf_counter_ns
 import click
 from serial_connection import SerialConnection
+import commands
 
 @click.group()
 @click.option('-p', '--port', default='/dev/ttyS2', help='Specify USB port', metavar='<com-port>')
@@ -13,11 +14,7 @@ def main(context: click.core.Context, **configs: Dict[str, Union[bool, str]]) ->
 @main.command(help='Handshake with device')
 @click.pass_obj
 def hello(obj: Dict[str, Union[bool, str]]) -> None:
-    click.secho('> Handshaking with device', fg='yellow')
-
-    with SerialConnection(**obj) as connection:
-        connection.send_message(b'hello')
-        connection.receive_message()
+    commands.command_hello(**obj)
 
 @main.command(help='Collect a trace')
 @click.option('-n', '--count', default=5, help='Specify number of reads', metavar='<num-reads>')
