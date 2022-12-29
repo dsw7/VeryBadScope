@@ -40,9 +40,9 @@ void read_analog_pin(const String &command)
         ::Serial.flush();
         return;
     }
-    else if (n_reads < 0)
+    else if (n_reads < 5)
     {
-        ::Serial.println("Parsed a negative number of reads!");
+        ::Serial.println("Minimum of 5 reads required!");
         ::Serial.flush();
         return;
     }
@@ -55,9 +55,9 @@ void read_analog_pin(const String &command)
         ::Serial.flush();
         return;
     }
-    else if (range < 0)
+    else if (range < 1000)
     {
-        ::Serial.println("Parsed a negative range!");
+        ::Serial.println("Minimum range is 1000 microseconds!");
         ::Serial.flush();
         return;
     }
@@ -70,7 +70,22 @@ void read_analog_pin(const String &command)
     // On UNO, it takes about one hundred microseconds to read analog input
     // See: https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/
     // From my experimentation, the read time delay is 112 usecs
-    static unsigned long period = (range / n_reads) - 112;
+    long period = (range / n_reads) - 112;
+
+    // See: https://www.arduino.cc/reference/en/language/functions/time/delaymicroseconds/
+    // For a description of these magic numbers
+    if (period < 3)
+    {
+        ::Serial.println("Computed period is too short. Try a greater range to count ratio!");
+        ::Serial.flush();
+        return;
+    }
+    else if (period > 16383)
+    {
+        ::Serial.println("Computed period is too long. Try a lesser range to count ratio!");
+        ::Serial.flush();
+        return;
+    }
 
     unsigned long start_time = ::micros();
 
