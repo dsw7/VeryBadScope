@@ -20,6 +20,8 @@ void run_connection_test()
 
 void read_analog_pin(const String &command)
 {
+    // Command should be of form: read:<num-reads>:<time-range>
+
     if (command.length() < 6)
     {
         ::Serial.println("Invalid input!");
@@ -27,15 +29,18 @@ void read_analog_pin(const String &command)
         return;
     }
 
-    long num_reads = command.substring(command.indexOf(':') + 1).toInt();
+    int idx_col_1 = command.indexOf(':');
+    int idx_col_2 = command.indexOf(':', idx_col_1 + 1);
 
-    if (num_reads == 0)
+    long n_reads = command.substring(idx_col_1 + 1, idx_col_2).toInt();
+
+    if (n_reads == 0)
     {
         ::Serial.println("Could not parse number of reads!");
         ::Serial.flush();
         return;
     }
-    else if (num_reads < 0)
+    else if (n_reads < 0)
     {
         ::Serial.println("Parsed a negative number of reads!");
         ::Serial.flush();
@@ -44,8 +49,8 @@ void read_analog_pin(const String &command)
 
     static unsigned int read_pin = A0;
 
-    unsigned int read_results[num_reads];
-    unsigned long read_times_usec[num_reads];
+    unsigned int read_results[n_reads];
+    unsigned long read_times_usec[n_reads];
 
     // On UNO, it takes about one hundred microseconds to read analog input
     // See: https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/
@@ -53,14 +58,14 @@ void read_analog_pin(const String &command)
 
     unsigned long start_time = ::micros();
 
-    for (unsigned int i = 0; i < num_reads; ++i)
+    for (unsigned int i = 0; i < n_reads; ++i)
     {
         read_results[i] = ::analogRead(A0);
         read_times_usec[i] = ::micros(); // note that micros is slow
         ::delayMicroseconds(delay_read);
     }
 
-    for (unsigned int i = 0; i < num_reads; ++i)
+    for (unsigned int i = 0; i < n_reads; ++i)
     {
         ::Serial.print(read_results[i]);
         ::Serial.print(' ');
@@ -68,7 +73,7 @@ void read_analog_pin(const String &command)
     ::Serial.println();
     ::Serial.flush();
 
-    for (unsigned int i = 0; i < num_reads; ++i)
+    for (unsigned int i = 0; i < n_reads; ++i)
     {
         ::Serial.print(read_times_usec[i] - start_time);
         ::Serial.print(' ');
