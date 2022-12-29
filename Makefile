@@ -48,3 +48,7 @@ upload: compile
 	--verbose \
 	--input-dir=$(BUILD_PATH) \
 	$(PATH_INO_SRC)/
+
+test:
+	$(call MESSAGE,Running unit tests)
+	@python3 -m pytest --verbose --capture=no .

@@ -45,7 +45,7 @@ class SerialConnection:
             'port': self.port
         }
 
-        self.logger.debug('Connecting using parameters: %s', dumps(connection_params, indent=4))
+        self.logger.debug('Connecting using parameters:\n%s', dumps(connection_params, indent=4))
 
         try:
             self.serial_port_obj = serial.Serial(**connection_params)
