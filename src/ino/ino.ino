@@ -107,6 +107,7 @@ void read_analog_pin(const String &command)
         ::delayMicroseconds(period);
     }
 
+    ::Serial.print("1;");
     for (unsigned int i = 0; i < n_reads; ++i)
     {
         ::Serial.print(read_results[i]);
@@ -115,6 +116,7 @@ void read_analog_pin(const String &command)
     ::Serial.println();
     ::Serial.flush();
 
+    ::Serial.print("1;");
     for (unsigned int i = 0; i < n_reads; ++i)
     {
         ::Serial.print(read_times_usec[i] - start_time);
