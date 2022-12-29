@@ -14,5 +14,5 @@ def connection() -> SerialConnection:
         "debug": False
     }
 
-    with SerialConnection(**connection_params) as connection:
-        yield connection
+    with SerialConnection(**connection_params) as conn:
+        yield conn
