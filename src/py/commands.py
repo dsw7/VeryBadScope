@@ -43,11 +43,13 @@ def command_read(**cli_params: Dict[str, Union[bool, str]]) -> None:
         end = (perf_counter_ns() - start) / 1_000_000
         secho(f'> Round trip time: {end} ms', fg='yellow')
 
-    voltages = helpers.results_to_ints(result_v)
     times = helpers.results_to_ints(result_t)
+    voltages = helpers.results_to_ints(result_v)
+
     times_n = helpers.normalize_time_series(times)
+    voltages_n = helpers.normalize_voltage_series(voltages)
 
     if cli_params['plot']:
         pass
     else:
-        helpers.peek(times_n, voltages)
+        helpers.peek(times_n, voltages_n)
