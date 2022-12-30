@@ -91,8 +91,6 @@ void read_analog_pin(const String &command)
         return;
     }
 
-    unsigned long start_time = ::micros();
-
     for (unsigned int i = 0; i < n_reads; ++i)
     {
         read_results[i] = ::analogRead(A0);
@@ -112,7 +110,7 @@ void read_analog_pin(const String &command)
     ::Serial.print("1;");
     for (unsigned int i = 0; i < n_reads; ++i)
     {
-        ::Serial.print(read_times_usec[i] - start_time);
+        ::Serial.print(read_times_usec[i]);
         ::Serial.print(' ');
     }
     ::Serial.println();
