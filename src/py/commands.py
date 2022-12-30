@@ -3,6 +3,7 @@ from typing import Dict, Union
 import sys
 from click import secho
 from serial_connection import SerialConnection
+import helpers
 
 def command_hello(**cli_params: Dict[str, Union[bool, str]]) -> None:
 
@@ -23,18 +24,30 @@ def command_read(**cli_params: Dict[str, Union[bool, str]]) -> None:
     count = cli_params['count']
     time_range = cli_params['time_range']
 
+    result_v = None
+    result_t = None
+
     with SerialConnection(**cli_params) as connection:
 
         start = perf_counter_ns()
         connection.send_message(f'read:{count}:{time_range}')
 
-        rv, result = connection.receive_message() # voltages
+        rv, result_v = connection.receive_message() # voltages
         if not rv:
-            sys.exit(result)
+            sys.exit(result_v)
 
-        rv, result = connection.receive_message() # times
+        rv, result_t = connection.receive_message() # times
         if not rv:
-            sys.exit(result)
+            sys.exit(result_t)
 
         end = (perf_counter_ns() - start) / 1_000_000
         secho(f'> Round trip time: {end} ms', fg='yellow')
+
+    voltages = helpers.results_to_ints(result_v)
+    times = helpers.results_to_ints(result_t)
+    times_n = helpers.normalize_time_series(times)
+
+    if cli_params['plot']:
+        pass
+    else:
+        helpers.peek(times_n, voltages)

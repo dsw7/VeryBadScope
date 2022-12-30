@@ -17,6 +17,7 @@ def hello(obj: Dict[str, Union[bool, str]]) -> None:
 @main.command(help='Collect a trace')
 @click.option('-n', '--count', default=5, help='Specify number of reads', metavar='<num-reads>')
 @click.option('-r', '--time-range', default=1000, help='Specify time range to read over', metavar='<microseconds>')
+@click.option('-p', '--plot', is_flag=True, help='Plot results')
 @click.pass_obj
 def read(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
     commands.command_read(**obj, **options)
