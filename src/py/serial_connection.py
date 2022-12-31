@@ -105,7 +105,7 @@ class SerialConnection:
         try:
             results = bytes_from_dev.decode(ENCODING).strip()
         except UnicodeDecodeError as e:
-            sys.exit(f'An exception occurred when decoding results: "{e}"')
+            return False, f'An exception occurred when decoding results: "{e}"'
 
         status, message = results.split(';')
 
