@@ -36,5 +36,5 @@ def plot(results_t: List[int], results_v: List[float]) -> None:
     plt.grid(color='navy', lw=0.5)
     plt.xlabel('Time ($\mu$s)')
     plt.ylabel('Voltage (V)')
-    plt.plot(results_t, results_v, color='greenyellow')
+    plt.plot(results_t, results_v, color='greenyellow', lw=0.75)
     plt.savefig(save_path, dpi=500)
