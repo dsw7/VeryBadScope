@@ -102,7 +102,11 @@ class SerialConnection:
         else:
             self.logger.debug('Received message: %s', bytes_from_dev)
 
-        results = bytes_from_dev.decode(ENCODING).strip()
+        try:
+            results = bytes_from_dev.decode(ENCODING).strip()
+        except UnicodeDecodeError as e:
+            sys.exit(f'An exception occurred when decoding results: "{e}"')
+
         status, message = results.split(';')
 
         return int(status) == 1, message
