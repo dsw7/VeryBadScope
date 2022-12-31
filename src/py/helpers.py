@@ -32,6 +32,7 @@ def plot(results_t: List[int], results_v: List[float]) -> None:
     import matplotlib.pyplot as plt
 
     plt.style.use('dark_background')
+    plt.minorticks_on()
     plt.grid(color='navy', lw=0.5)
     plt.xlabel('Time ($\mu$s)')
     plt.ylabel('Voltage (V)')
