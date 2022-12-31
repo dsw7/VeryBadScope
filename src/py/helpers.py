@@ -33,7 +33,8 @@ def plot(results_t: List[int], results_v: List[float]) -> None:
 
     plt.style.use('dark_background')
     plt.minorticks_on()
-    plt.grid(color='navy', lw=0.5)
+    plt.grid(color='navy', lw=0.5, which='major')
+    plt.grid(color='navy', lw=0.25, which='minor')
     plt.xlabel('Time ($\mu$s)')
     plt.ylabel('Voltage (V)')
     plt.plot(results_t, results_v, color='greenyellow', lw=0.75)
