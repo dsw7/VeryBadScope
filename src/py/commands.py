@@ -50,6 +50,6 @@ def command_read(**cli_params: Dict[str, Union[bool, str]]) -> None:
     voltages_n = helpers.normalize_voltage_series(voltages)
 
     if cli_params['plot']:
-        pass
+        helpers.plot(times_n, voltages_n)
     else:
         helpers.peek(times_n, voltages_n)
