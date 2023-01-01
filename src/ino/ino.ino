@@ -1,3 +1,4 @@
+#include "command_connection_test.h"
 #include "core_primitives.h"
 
 const unsigned int BAUD_RATE = 19200;
@@ -5,19 +6,6 @@ const unsigned int MAX_TIME_MILLISEC_WAIT_SERIAL_DATA = 10;
 
 namespace Core
 {
-
-void run_connection_test()
-{
-    Primitives::info("Hello from InoDAQ2. I should blink 5 times!");
-
-    for (unsigned int i = 0; i < 5; ++i)
-    {
-        ::digitalWrite(LED_BUILTIN, HIGH);
-        ::delay(100);
-        ::digitalWrite(LED_BUILTIN, LOW);
-        ::delay(100);
-    }
-}
 
 void read_analog_pin(const String &command)
 {
@@ -125,7 +113,7 @@ void loop()
 
         if (command == "hello")
         {
-            Core::run_connection_test();
+            Command::run_connection_test();
         }
         else if (command.startsWith("read:"))
         {
