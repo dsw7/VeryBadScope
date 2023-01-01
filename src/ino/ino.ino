@@ -1,24 +1,14 @@
+#include "core_primitives.h"
+
 const unsigned int BAUD_RATE = 19200;
 const unsigned int MAX_TIME_MILLISEC_WAIT_SERIAL_DATA = 10;
 
 namespace Core
 {
 
-void info(const String &message)
-{
-    ::Serial.println("1;" + message);
-    ::Serial.flush();
-}
-
-void error(const String &message)
-{
-    ::Serial.println("0;" + message);
-    ::Serial.flush();
-}
-
 void run_connection_test()
 {
-    info("Hello from InoDAQ2. I should blink 5 times!");
+    Primitives::info("Hello from InoDAQ2. I should blink 5 times!");
 
     for (unsigned int i = 0; i < 5; ++i)
     {
@@ -35,7 +25,7 @@ void read_analog_pin(const String &command)
 
     if (command.length() < 6)
     {
-        error("Malformed read command!");
+        Primitives::error("Malformed read command!");
         return;
     }
 
@@ -46,12 +36,12 @@ void read_analog_pin(const String &command)
 
     if (n_reads == 0)
     {
-        error("Could not parse number of reads!");
+        Primitives::error("Could not parse number of reads!");
         return;
     }
     else if (n_reads < 5)
     {
-        error("Minimum of 5 reads required!");
+        Primitives::error("Minimum of 5 reads required!");
         return;
     }
 
@@ -59,12 +49,12 @@ void read_analog_pin(const String &command)
 
     if (range == 0)
     {
-        error("Could not parse range!");
+        Primitives::error("Could not parse range!");
         return;
     }
     else if (range < 1000)
     {
-        error("Minimum range is 1000 microseconds!");
+        Primitives::error("Minimum range is 1000 microseconds!");
         return;
     }
 
@@ -82,12 +72,12 @@ void read_analog_pin(const String &command)
     // For a description of these magic numbers
     if (period < 3)
     {
-        error("Computed period is too short. Try a greater range to count ratio!");
+        Primitives::error("Computed period is too short. Try a greater range to count ratio!");
         return;
     }
     else if (period > 16383)
     {
-        error("Computed period is too long. Try a lesser range to count ratio!");
+        Primitives::error("Computed period is too long. Try a lesser range to count ratio!");
         return;
     }
 
@@ -117,17 +107,6 @@ void read_analog_pin(const String &command)
     ::Serial.flush();
 }
 
-void exit_program()
-{
-    info("Closing connection. Goodbye!");
-    ::Serial.end();
-}
-
-void handle_unknown_command(const String &command)
-{
-    error("Unknown command: " + command);
-}
-
 } // namespace Core
 
 void setup()
@@ -154,12 +133,13 @@ void loop()
         }
         else if (command == "exit")
         {
-            Core::exit_program();
+            Primitives::info("Closing connection. Goodbye!");
+            ::Serial.end();
             break;
         }
         else
         {
-            Core::handle_unknown_command(command);
+            Primitives::error("Unknown command: " + command);
         }
     }
 }
