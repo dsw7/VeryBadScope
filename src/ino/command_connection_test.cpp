@@ -1,6 +1,6 @@
 #include "command_connection_test.h"
 
-#include "core_primitives.h"
+#include "helpers.h"
 
 #include "Arduino.h"
 
@@ -9,7 +9,7 @@ namespace Command
 
 void run_connection_test()
 {
-    Primitives::info("Hello from InoDAQ2. I should blink 5 times!");
+    Helpers::info("Hello from InoDAQ2. I should blink 5 times!");
 
     for (unsigned int i = 0; i < 5; ++i)
     {

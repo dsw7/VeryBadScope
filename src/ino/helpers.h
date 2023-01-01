@@ -2,7 +2,7 @@
 
 #include "Arduino.h"
 
-namespace Primitives
+namespace Helpers
 {
     void info(const String &message);
     void error(const String &message);

@@ -1,6 +1,6 @@
-#include "core_primitives.h"
+#include "helpers.h"
 
-namespace Primitives
+namespace Helpers
 {
 
 void info(const String &message)
@@ -15,4 +15,4 @@ void error(const String &message)
     ::Serial.flush();
 }
 
-} // namespace Primitives
+} // namespace Helpers

@@ -1,6 +1,6 @@
 #include "command_connection_test.h"
 #include "command_roll.h"
-#include "core_primitives.h"
+#include "helpers.h"
 
 const unsigned int BAUD_RATE = 19200;
 const unsigned int MAX_TIME_MILLISEC_WAIT_SERIAL_DATA = 10;
@@ -29,13 +29,13 @@ void loop()
         }
         else if (command == "exit")
         {
-            Primitives::info("Closing connection. Goodbye!");
+            Helpers::info("Closing connection. Goodbye!");
             ::Serial.end();
             break;
         }
         else
         {
-            Primitives::error("Unknown command: " + command);
+            Helpers::error("Unknown command: " + command);
         }
     }
 }

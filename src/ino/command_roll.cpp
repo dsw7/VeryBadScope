@@ -1,6 +1,6 @@
 #include "command_roll.h"
 
-#include "core_primitives.h"
+#include "helpers.h"
 
 namespace Command
 {
@@ -11,7 +11,7 @@ void roll(const String &command)
 
     if (command.length() < 6)
     {
-        Primitives::error("Malformed read command!");
+        Helpers::error("Malformed read command!");
         return;
     }
 
@@ -22,12 +22,12 @@ void roll(const String &command)
 
     if (n_reads == 0)
     {
-        Primitives::error("Could not parse number of reads!");
+        Helpers::error("Could not parse number of reads!");
         return;
     }
     else if (n_reads < 5)
     {
-        Primitives::error("Minimum of 5 reads required!");
+        Helpers::error("Minimum of 5 reads required!");
         return;
     }
 
@@ -35,12 +35,12 @@ void roll(const String &command)
 
     if (range == 0)
     {
-        Primitives::error("Could not parse range!");
+        Helpers::error("Could not parse range!");
         return;
     }
     else if (range < 1000)
     {
-        Primitives::error("Minimum range is 1000 microseconds!");
+        Helpers::error("Minimum range is 1000 microseconds!");
         return;
     }
 
@@ -58,12 +58,12 @@ void roll(const String &command)
     // For a description of these magic numbers
     if (period < 3)
     {
-        Primitives::error("Computed period is too short. Try a greater range to count ratio!");
+        Helpers::error("Computed period is too short. Try a greater range to count ratio!");
         return;
     }
     else if (period > 16383)
     {
-        Primitives::error("Computed period is too long. Try a lesser range to count ratio!");
+        Helpers::error("Computed period is too long. Try a lesser range to count ratio!");
         return;
     }
 
