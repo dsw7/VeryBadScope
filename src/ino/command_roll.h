@@ -8,15 +8,9 @@ namespace Command
     {
         public:
             void set_command(const ::String &command);
-            virtual void read();
+            virtual void acquire_data() = 0;
 
         protected:
-            bool validate_command();
-            bool parse_command_indices();
-            bool parse_record_length();
-            bool parse_measurement_duration();
-            bool compute_period();
-
             ::String command = "read:5:1000";
 
             int idx_record_length = 0;
@@ -25,7 +19,20 @@ namespace Command
             long record_length = 0;
             long measurement_duration = 0;
             long period = 0;
+
+            bool validate_command();
+            bool parse_command_indices();
+            bool parse_record_length();
+            bool parse_measurement_duration();
+            bool compute_period();
     };
 
-    void roll(const String &command);
+    class Roll: public ScopeBase
+    {
+        public:
+            void acquire_data();
+
+        private:
+            void roll();
+    };
 }

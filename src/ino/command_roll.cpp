@@ -101,97 +101,67 @@ bool ScopeBase::compute_period()
     return true;
 }
 
-void roll(const String &command)
+void Roll::roll()
 {
-    // Command should be of form: read:<num-reads>:<range-in-usecs>
-
-    // 1. validate read length
-    if (command.length() < 6)
-    {
-        Helpers::error("Malformed read command!");
-        return;
-    }
-
-    // 2. get indices
-    int idx_col_1 = command.indexOf(':');
-    int idx_col_2 = command.indexOf(':', idx_col_1 + 1);
-
-    // 3. get number of reads
-    long n_reads = command.substring(idx_col_1 + 1, idx_col_2).toInt();
-
-    if (n_reads == 0)
-    {
-        Helpers::error("Could not parse number of reads!");
-        return;
-    }
-    else if (n_reads < 5)
-    {
-        Helpers::error("Minimum of 5 reads required!");
-        return;
-    }
-
-    // 4. get timebase
-    long range = command.substring(idx_col_2 + 1).toInt();
-
-    if (range == 0)
-    {
-        Helpers::error("Could not parse range!");
-        return;
-    }
-    else if (range < 1000)
-    {
-        Helpers::error("Minimum range is 1000 microseconds!");
-        return;
-    }
-
-    // 5. get period
-
-    // On UNO, it takes about one hundred microseconds to read analog input
-    // See: https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/
-    // From my experimentation, the read time delay is 112 usecs
-    long period = (range / n_reads) - 112;
-
-    // See: https://www.arduino.cc/reference/en/language/functions/time/delaymicroseconds/
-    // For a description of these magic numbers
-    if (period < 3)
-    {
-        Helpers::error("Computed period is too short. Try a greater range to count ratio!");
-        return;
-    }
-    else if (period > 16383)
-    {
-        Helpers::error("Computed period is too long. Try a lesser range to count ratio!");
-        return;
-    }
-
-    unsigned int read_results[n_reads] = {0};
-    unsigned long read_times_usec[n_reads] = {0};
     static unsigned int read_pin = A0;
 
-    for (unsigned int i = 0; i < n_reads; ++i)
+    unsigned int v_t[this->record_length] = {0};
+    unsigned long time_usec[this->record_length] = {0};
+
+    for (unsigned int i = 0; i < this->record_length; ++i)
     {
-        read_results[i] = ::analogRead(read_pin);
-        read_times_usec[i] = ::micros();
-        ::delayMicroseconds(period);
+        v_t[i] = ::analogRead(read_pin);
+        time_usec[i] = ::micros();
+        ::delayMicroseconds(this->period);
     }
 
     ::Serial.print("1;");
-    for (unsigned int i = 0; i < n_reads; ++i)
+    for (unsigned int i = 0; i < this->record_length; ++i)
     {
-        ::Serial.print(read_results[i]);
+        ::Serial.print(v_t[i]);
         ::Serial.print(' ');
     }
     ::Serial.println();
     ::Serial.flush();
 
     ::Serial.print("1;");
-    for (unsigned int i = 0; i < n_reads; ++i)
+    for (unsigned int i = 0; i < this->record_length; ++i)
     {
-        ::Serial.print(read_times_usec[i]);
+        ::Serial.print(time_usec[i]);
         ::Serial.print(' ');
     }
     ::Serial.println();
     ::Serial.flush();
+}
+
+void Roll::acquire_data()
+{
+    if (not this->validate_command())
+    {
+        return;
+    }
+
+    if (not this->parse_command_indices())
+    {
+        return;
+    }
+
+    if (not this->parse_record_length())
+    {
+        return;
+    }
+
+    if (not this->parse_measurement_duration())
+    {
+        return;
+    }
+
+    if (not this->compute_period())
+    {
+        return;
+    }
+
+    this->roll();
 }
 
 } // namespace Command

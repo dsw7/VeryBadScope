@@ -25,7 +25,9 @@ void loop()
         }
         else if (command.startsWith("read:"))
         {
-            Command::roll(command);
+            Command::Roll roll;
+            roll.set_command(command);
+            roll.acquire_data();
         }
         else if (command == "exit")
         {
