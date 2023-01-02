@@ -9,15 +9,18 @@ void roll(const String &command)
 {
     // Command should be of form: read:<num-reads>:<range-in-usecs>
 
+    // 1. validate read length
     if (command.length() < 6)
     {
         Helpers::error("Malformed read command!");
         return;
     }
 
+    // 2. get indices
     int idx_col_1 = command.indexOf(':');
     int idx_col_2 = command.indexOf(':', idx_col_1 + 1);
 
+    // 3. get number of reads
     long n_reads = command.substring(idx_col_1 + 1, idx_col_2).toInt();
 
     if (n_reads == 0)
@@ -31,6 +34,7 @@ void roll(const String &command)
         return;
     }
 
+    // 4. get timebase
     long range = command.substring(idx_col_2 + 1).toInt();
 
     if (range == 0)
@@ -44,10 +48,7 @@ void roll(const String &command)
         return;
     }
 
-    static unsigned int read_pin = A0;
-
-    unsigned int read_results[n_reads] = {0};
-    unsigned long read_times_usec[n_reads] = {0};
+    // 5. get period
 
     // On UNO, it takes about one hundred microseconds to read analog input
     // See: https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/
@@ -67,9 +68,13 @@ void roll(const String &command)
         return;
     }
 
+    unsigned int read_results[n_reads] = {0};
+    unsigned long read_times_usec[n_reads] = {0};
+    static unsigned int read_pin = A0;
+
     for (unsigned int i = 0; i < n_reads; ++i)
     {
-        read_results[i] = ::analogRead(A0);
+        read_results[i] = ::analogRead(read_pin);
         read_times_usec[i] = ::micros();
         ::delayMicroseconds(period);
     }
