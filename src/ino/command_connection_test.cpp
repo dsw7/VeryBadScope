@@ -9,7 +9,7 @@ namespace Command
 
 void run_connection_test()
 {
-    Helpers::info("Hello from InoDAQ2. I should blink 5 times!");
+    Helpers::info(F("Hello from InoDAQ2. I should blink 5 times!"));
 
     for (unsigned int i = 0; i < 5; ++i)
     {

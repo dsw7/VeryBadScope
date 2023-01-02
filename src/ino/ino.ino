@@ -19,19 +19,19 @@ void loop()
         ::String command = ::Serial.readString();
         command.trim();
 
-        if (command == "hello")
+        if (command == F("hello"))
         {
             Command::run_connection_test();
         }
-        else if (command.startsWith("read:"))
+        else if (command.startsWith(F("read:")))
         {
             Command::Roll roll;
             roll.set_command(command);
             roll.acquire_data();
         }
-        else if (command == "exit")
+        else if (command == F("exit"))
         {
-            Helpers::info("Closing connection. Goodbye!");
+            Helpers::info(F("Closing connection. Goodbye!"));
             ::Serial.end();
             break;
         }

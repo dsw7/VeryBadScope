@@ -17,7 +17,7 @@ void Roll::roll()
         ::delayMicroseconds(this->period);
     }
 
-    ::Serial.print("1;");
+    ::Serial.print(F("1;"));
     for (unsigned int i = 0; i < this->record_length; ++i)
     {
         ::Serial.print(v_t[i]);
@@ -26,7 +26,7 @@ void Roll::roll()
     ::Serial.println();
     ::Serial.flush();
 
-    ::Serial.print("1;");
+    ::Serial.print(F("1;"));
     for (unsigned int i = 0; i < this->record_length; ++i)
     {
         ::Serial.print(time_usec[i]);
