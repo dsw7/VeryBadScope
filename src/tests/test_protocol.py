@@ -48,7 +48,7 @@ def test_read_3(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Could not parse number of reads!'
+    assert message == 'Could not parse record length!'
 
 def test_read_4(connection: SerialConnection) -> None:
 
@@ -56,7 +56,7 @@ def test_read_4(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Could not parse number of reads!'
+    assert message == 'Could not parse record length!'
 
 def test_read_5(connection: SerialConnection) -> None:
 
@@ -64,7 +64,7 @@ def test_read_5(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Minimum of 5 reads required!'
+    assert message == 'Record length must be at least 5 reads!'
 
 def test_read_6(connection: SerialConnection) -> None:
 
@@ -72,7 +72,7 @@ def test_read_6(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Could not parse range!'
+    assert message == 'Could not parse measurement duration!'
 
 def test_read_7(connection: SerialConnection) -> None:
 
@@ -80,7 +80,7 @@ def test_read_7(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Could not parse range!'
+    assert message == 'Could not parse measurement duration!'
 
 def test_read_8(connection: SerialConnection) -> None:
 
@@ -88,7 +88,7 @@ def test_read_8(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Minimum range is 1000 microseconds!'
+    assert message == 'Minimum measurement duration is 1000 microseconds!'
 
 def test_read_9(connection: SerialConnection) -> None:
 
