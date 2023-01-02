@@ -81,7 +81,9 @@ class SerialConnection:
 
         self.logger.debug('Sending message: "%s"', message)
         message = message.encode(encoding=ENCODING)
+
         self.logger.debug('Sent %i bytes', self.serial_port_obj.write(message))
+        self.serial_port_obj.flush()
 
     def receive_message(self: T) -> Tuple[bool, str]:
 
