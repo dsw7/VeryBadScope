@@ -11,7 +11,7 @@ namespace Command
             virtual void acquire_data() = 0;
 
         protected:
-            ::String command = "read:5:1000";
+            ::String command = "roll:5:1000";
 
             int idx_record_length = 0;
             int idx_measurement_duration = 0;

@@ -19,8 +19,8 @@ def hello(obj: Dict[str, Union[bool, str]]) -> None:
 @click.option('-r', '--time-range', default=1000, help='Specify time range to read over', metavar='<microseconds>')
 @click.option('-p', '--plot', is_flag=True, help='Plot results')
 @click.pass_obj
-def read(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
-    commands.command_read(**obj, **options)
+def roll(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
+    commands.command_roll(**obj, **options)
 
 if __name__ == '__main__':
     main()

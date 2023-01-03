@@ -17,7 +17,7 @@ def command_hello(**cli_params: Dict[str, Union[bool, str]]) -> None:
         if not rv:
             sys.exit(error)
 
-def command_read(**cli_params: Dict[str, Union[bool, str]]) -> None:
+def command_roll(**cli_params: Dict[str, Union[bool, str]]) -> None:
 
     secho('> Reading data from device', fg='yellow')
 
@@ -30,7 +30,7 @@ def command_read(**cli_params: Dict[str, Union[bool, str]]) -> None:
     with SerialConnection(**cli_params) as connection:
 
         start = perf_counter_ns()
-        connection.send_message(f'read:{count}:{time_range}')
+        connection.send_message(f'roll:{count}:{time_range}')
 
         rv, result_v = connection.receive_message() # voltages
         if not rv:

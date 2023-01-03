@@ -24,17 +24,17 @@ def test_hello_2(connection: SerialConnection) -> None:
     assert not rv
     assert message == 'Unknown command: hello:'
 
-def test_read_1(connection: SerialConnection) -> None:
+def test_roll_1(connection: SerialConnection) -> None:
 
-    connection.send_message('read:')
+    connection.send_message('roll:')
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Malformed read command!'
+    assert message == 'Malformed roll command!'
 
-def test_read_2(connection: SerialConnection) -> None:
+def test_roll_2(connection: SerialConnection) -> None:
 
-    connection.send_message('read:5:1000')
+    connection.send_message('roll:5:1000')
 
     rv, _ = connection.receive_message()  # voltage
     assert rv
@@ -42,65 +42,65 @@ def test_read_2(connection: SerialConnection) -> None:
     rv, _ = connection.receive_message()  # times
     assert rv
 
-def test_read_3(connection: SerialConnection) -> None:
+def test_roll_3(connection: SerialConnection) -> None:
 
-    connection.send_message('read::1000')
+    connection.send_message('roll::1000')
     rv, message = connection.receive_message()
 
     assert not rv
     assert message == 'Could not parse record length!'
 
-def test_read_4(connection: SerialConnection) -> None:
+def test_roll_4(connection: SerialConnection) -> None:
 
-    connection.send_message('read:abc:1000')
+    connection.send_message('roll:abc:1000')
     rv, message = connection.receive_message()
 
     assert not rv
     assert message == 'Could not parse record length!'
 
-def test_read_5(connection: SerialConnection) -> None:
+def test_roll_5(connection: SerialConnection) -> None:
 
-    connection.send_message('read:-1:1000')
+    connection.send_message('roll:-1:1000')
     rv, message = connection.receive_message()
 
     assert not rv
     assert message == 'Record length must be at least 5 reads!'
 
-def test_read_6(connection: SerialConnection) -> None:
+def test_roll_6(connection: SerialConnection) -> None:
 
-    connection.send_message('read:5:')
+    connection.send_message('roll:5:')
     rv, message = connection.receive_message()
 
     assert not rv
     assert message == 'Could not parse measurement duration!'
 
-def test_read_7(connection: SerialConnection) -> None:
+def test_roll_7(connection: SerialConnection) -> None:
 
-    connection.send_message('read:5:abc')
+    connection.send_message('roll:5:abc')
     rv, message = connection.receive_message()
 
     assert not rv
     assert message == 'Could not parse measurement duration!'
 
-def test_read_8(connection: SerialConnection) -> None:
+def test_roll_8(connection: SerialConnection) -> None:
 
-    connection.send_message('read:5:-1')
+    connection.send_message('roll:5:-1')
     rv, message = connection.receive_message()
 
     assert not rv
     assert message == 'Minimum measurement duration is 1000 microseconds!'
 
-def test_read_9(connection: SerialConnection) -> None:
+def test_roll_9(connection: SerialConnection) -> None:
 
-    connection.send_message('read:10:1000')
+    connection.send_message('roll:10:1000')
     rv, message = connection.receive_message()
 
     assert not rv
     assert message == 'Computed period is too short. Try a greater range to count ratio!'
 
-def test_read_10(connection: SerialConnection) -> None:
+def test_roll_10(connection: SerialConnection) -> None:
 
-    connection.send_message('read:5:2000000')
+    connection.send_message('roll:5:2000000')
     rv, message = connection.receive_message()
 
     assert not rv

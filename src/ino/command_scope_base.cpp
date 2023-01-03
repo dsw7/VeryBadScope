@@ -14,7 +14,7 @@ bool ScopeBase::validate_command()
 {
     if (this->command.length() < 6)
     {
-        Helpers::error(F("Malformed read command!"));
+        Helpers::error(F("Malformed command!"));
         return false;
     }
 
@@ -27,7 +27,7 @@ bool ScopeBase::parse_command_indices()
 
     if (this->idx_record_length < 0)
     {
-        Helpers::error(F("Malformed read command! Missing one or more colons"));
+        Helpers::error(F("Malformed command! Missing one or more colons"));
         return false;
     }
 
@@ -35,7 +35,7 @@ bool ScopeBase::parse_command_indices()
 
     if (this->idx_measurement_duration < 0)
     {
-        Helpers::error(F("Malformed read command! Missing one or more colons"));
+        Helpers::error(F("Malformed command! Missing one or more colons"));
         return false;
     }
 

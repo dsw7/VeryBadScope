@@ -23,7 +23,7 @@ void loop()
         {
             Command::run_connection_test();
         }
-        else if (command.startsWith(F("read:")))
+        else if (command.startsWith(F("roll:")))
         {
             Command::Roll roll;
             roll.set_command(command);
