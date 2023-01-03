@@ -21,8 +21,8 @@ def command_roll(**cli_params: Dict[str, Union[bool, str]]) -> None:
 
     secho('> Reading data from device', fg='yellow')
 
-    count = cli_params['count']
-    time_range = cli_params['time_range']
+    record_length = cli_params['record_length']
+    measurement_duration = cli_params['measurement_duration']
 
     result_v = None
     result_t = None
@@ -30,7 +30,7 @@ def command_roll(**cli_params: Dict[str, Union[bool, str]]) -> None:
     with SerialConnection(**cli_params) as connection:
 
         start = perf_counter_ns()
-        connection.send_message(f'roll:{count}:{time_range}')
+        connection.send_message(f'roll:{record_length}:{measurement_duration}')
 
         rv, result_v = connection.receive_message() # voltages
         if not rv:
