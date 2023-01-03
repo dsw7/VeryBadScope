@@ -25,6 +25,8 @@ def roll(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
 @main.command(help='Collect a trace with triggering')
 @click.option('-n', '--record-length', default=5, help='Specify number of reads after the trigger', metavar='<num-reads>')
 @click.option('-r', '--measurement-duration', default=1000, help='Specify time range to read over', metavar='<microseconds>')
+@click.option('-t', '--trigger', type=click.Choice(['rising', 'falling']), default='rising', help='Specify trigger type')
+@click.option('-l', '--level', default=4, help='Specify trigger level', metavar='<voltage>')
 @click.option('-p', '--plot', is_flag=True, help='Plot results')
 @click.pass_obj
 def trigger(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:

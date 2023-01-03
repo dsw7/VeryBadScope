@@ -1,7 +1,30 @@
 #include "command_trigger.h"
 
+#include "helpers.h"
+
 namespace Command
 {
+
+bool Trigger::parse_trigger_specific_indices()
+{
+    this->idx_trigger = this->command.indexOf(':', this->idx_measurement_duration + 1);
+
+    if (this->idx_trigger < 0)
+    {
+        Helpers::error(F("Malformed command! Missing one or more colons"));
+        return false;
+    }
+
+    this->idx_trigger_level = this->command.indexOf(':', this->idx_trigger + 1);
+
+    if (this->idx_trigger_level < 0)
+    {
+        Helpers::error(F("Malformed command! Missing one or more colons"));
+        return false;
+    }
+
+    return true;
+}
 
 void Trigger::trigger()
 {
@@ -44,6 +67,11 @@ void Trigger::acquire_data()
     }
 
     if (not this->parse_command_indices())
+    {
+        return;
+    }
+
+    if (not this->parse_trigger_specific_indices())
     {
         return;
     }

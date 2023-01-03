@@ -60,6 +60,8 @@ def command_trigger(**cli_params: Dict[str, Union[bool, str]]) -> None:
 
     record_length = cli_params['record_length']
     measurement_duration = cli_params['measurement_duration']
+    trigger = cli_params['trigger']
+    level = cli_params['level']
 
     result_v = None
     result_t = None
@@ -67,7 +69,7 @@ def command_trigger(**cli_params: Dict[str, Union[bool, str]]) -> None:
     with SerialConnection(**cli_params) as connection:
 
         start = perf_counter_ns()
-        connection.send_message(f'trigger:{record_length}:{measurement_duration}')
+        connection.send_message(f'trigger:{record_length}:{measurement_duration}:{trigger}:{level}')
 
         rv, result_v = connection.receive_message()
         if not rv:
