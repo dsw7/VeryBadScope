@@ -16,7 +16,7 @@ namespace Command
             int idx_trigger_level = 0;
 
             ::String trigger_type = "rising";
-            float trigger_level = 0;
+            int trigger_level = 0;
 
             bool parse_trigger_specific_indices();
             bool parse_trigger();

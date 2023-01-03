@@ -47,7 +47,7 @@ bool Trigger::parse_trigger()
 
 bool Trigger::parse_trigger_level()
 {
-    this->trigger_level = command.substring(this->idx_trigger_level + 1).toFloat();
+    this->trigger_level = command.substring(this->idx_trigger_level + 1).toInt();
 
     if (this->trigger_level == 0)
     {
@@ -80,7 +80,7 @@ void Trigger::trigger()
     int v_t_b = ::analogRead(read_pin);
     unsigned long t = 0;
 
-    bool enable_counter = false;
+    bool count = false;
     unsigned int idx = 0;
 
     while (idx < this->record_length)
@@ -93,10 +93,10 @@ void Trigger::trigger()
 
         if ((v_t_b - v_t_a) >= this->trigger_level)
         {
-            enable_counter = true;
+            count = true;
         }
 
-        if (enable_counter)
+        if (count)
         {
             time_usec[idx] = t;
             v_t[idx] = v_t_b;
