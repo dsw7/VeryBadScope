@@ -58,7 +58,7 @@ def test_trigger_7(connection: SerialConnection) -> None:
 
 def test_trigger_8(connection: SerialConnection) -> None:
 
-    connection.send_message('trigger:5:1000:rising:0.05')
+    connection.send_message('trigger:5:1000:rising:19')
     rv, message = connection.receive_message()
 
     assert not rv
@@ -66,7 +66,7 @@ def test_trigger_8(connection: SerialConnection) -> None:
 
 def test_trigger_9(connection: SerialConnection) -> None:
 
-    connection.send_message('trigger:5:1000:rising:5.05')
+    connection.send_message('trigger:5:1000:rising:1024')
     rv, message = connection.receive_message()
 
     assert not rv
