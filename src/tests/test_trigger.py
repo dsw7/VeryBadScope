@@ -47,3 +47,27 @@ def test_trigger_6(connection: SerialConnection) -> None:
 
     assert not rv
     assert message == 'Could not parse trigger type!'
+
+def test_trigger_7(connection: SerialConnection) -> None:
+
+    connection.send_message('trigger:5:1000:rising:')
+    rv, message = connection.receive_message()
+
+    assert not rv
+    assert message == 'Could not parse trigger level!'
+
+def test_trigger_8(connection: SerialConnection) -> None:
+
+    connection.send_message('trigger:5:1000:rising:0.05')
+    rv, message = connection.receive_message()
+
+    assert not rv
+    assert message == 'Trigger level must be at least 0.1 volts!'
+
+def test_trigger_9(connection: SerialConnection) -> None:
+
+    connection.send_message('trigger:5:1000:rising:5.05')
+    rv, message = connection.receive_message()
+
+    assert not rv
+    assert message == 'Trigger level cannot exceed 5 volts!'

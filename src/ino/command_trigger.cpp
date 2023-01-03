@@ -35,9 +35,34 @@ bool Trigger::parse_trigger()
         Helpers::error(F("Could not parse trigger type!"));
         return false;
     }
-    else if ((this->trigger_type != "rising") or (this->trigger_type != "falling"))
+
+    if (this->trigger_type.equals("rising") or this->trigger_type.equals("falling"))
     {
-        Helpers::error(F("Invalid trigger type!"));
+        return true;
+    }
+
+    Helpers::error(F("Invalid trigger type!"));
+    return false;
+}
+
+bool Trigger::parse_trigger_level()
+{
+    this->trigger_level = command.substring(this->idx_trigger_level + 1).toFloat();
+
+    if (this->trigger_level == 0)
+    {
+        Helpers::error(F("Could not parse trigger level!"));
+        return false;
+    }
+
+    if (this->trigger_level < 0.1)
+    {
+        Helpers::error(F("Trigger level must be at least 0.1 volts!"));
+        return false;
+    }
+    else if (this->trigger_level > 5)
+    {
+        Helpers::error(F("Trigger level cannot exceed 5 volts!"));
         return false;
     }
 
@@ -100,6 +125,11 @@ void Trigger::acquire_data()
     }
 
     if (not this->parse_trigger())
+    {
+        return;
+    }
+
+    if (not this->parse_trigger_level())
     {
         return;
     }
