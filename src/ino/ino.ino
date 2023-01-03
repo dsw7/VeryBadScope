@@ -2,13 +2,13 @@
 #include "command_roll.h"
 #include "helpers.h"
 
-const unsigned int BAUD_RATE = 19200;
-const unsigned int MAX_TIME_MILLISEC_WAIT_SERIAL_DATA = 10;
-
 void setup()
 {
-    ::Serial.begin(::BAUD_RATE);
-    ::Serial.setTimeout(::MAX_TIME_MILLISEC_WAIT_SERIAL_DATA);
+    unsigned int baud_rate = 19200;
+    unsigned int max_time_millisec_wait_serial_data = 10;
+
+    ::Serial.begin(baud_rate);
+    ::Serial.setTimeout(max_time_millisec_wait_serial_data);
     ::pinMode(LED_BUILTIN, OUTPUT);
 }
 
