@@ -1,5 +1,6 @@
 #include "command_connection_test.h"
 #include "command_roll.h"
+#include "command_trigger.h"
 #include "helpers.h"
 
 void setup()
@@ -28,6 +29,12 @@ void loop()
             Command::Roll roll;
             roll.set_command(command);
             roll.acquire_data();
+        }
+        else if (command.startsWith(F("trigger:")))
+        {
+            Command::Trigger trigger;
+            trigger.set_command(command);
+            trigger.acquire_data();
         }
         else if (command == F("exit"))
         {
