@@ -3,7 +3,8 @@ from os import path
 from typing import List
 from click import secho
 
-CONST_VOUT_INO = 5 / 1023
+ANALOG_TO_VOLT = 5 / 1023
+VOLT_TO_ANALOG = 1023 / 5
 
 def results_to_ints(results: str) -> List[int]:
     return [int(r) for r in results.strip().split()]
@@ -12,7 +13,10 @@ def normalize_time_series(series: List[int]) -> List[int]:
     return [t - series[0] for t in series]
 
 def normalize_voltage_series(series: List[int]) -> List[int]:
-    return [round(v * CONST_VOUT_INO, 3) for v in series]
+    return [round(v * ANALOG_TO_VOLT, 3) for v in series]
+
+def volt_to_analog(voltage: float) -> int:
+    return int(VOLT_TO_ANALOG * voltage)
 
 def peek(results_t: List[int], results_v: List[float]) -> None:
 
