@@ -39,3 +39,11 @@ def test_trigger_5(connection: SerialConnection) -> None:
 
     assert not rv
     assert message == 'Invalid trigger type!'
+
+def test_trigger_6(connection: SerialConnection) -> None:
+
+    connection.send_message('trigger:5:1000::4')
+    rv, message = connection.receive_message()
+
+    assert not rv
+    assert message == 'Could not parse trigger type!'

@@ -28,14 +28,14 @@ bool Trigger::parse_trigger_specific_indices()
 
 bool Trigger::parse_trigger()
 {
-    this->trigger_type = command.substring(this->idx_trigger + 1, this->idx_trigger_level).toInt();
+    this->trigger_type = command.substring(this->idx_trigger + 1, this->idx_trigger_level);
 
     if (this->trigger_type == 0)
     {
         Helpers::error(F("Could not parse trigger type!"));
         return false;
     }
-    else if ((this->record_length != "rising") or (this->record_length != "falling"))
+    else if ((this->trigger_type != "rising") or (this->trigger_type != "falling"))
     {
         Helpers::error(F("Invalid trigger type!"));
         return false;
