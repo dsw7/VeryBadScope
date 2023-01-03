@@ -61,7 +61,7 @@ def command_trigger(**cli_params: Dict[str, Union[bool, str]]) -> None:
     record_length = cli_params['record_length']
     measurement_duration = cli_params['measurement_duration']
     trigger = cli_params['trigger']
-    level = cli_params['level']
+    level = helpers.volt_to_analog(cli_params['level'])
 
     result_v = None
     result_t = None
