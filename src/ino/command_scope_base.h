@@ -20,7 +20,6 @@ namespace Command
             long measurement_duration = 0;
             long period = 0;
 
-            bool validate_command();
             bool parse_command_indices();
             bool parse_record_length();
             bool parse_measurement_duration();

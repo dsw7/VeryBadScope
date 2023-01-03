@@ -10,17 +10,6 @@ void ScopeBase::set_command(const ::String &command)
     this->command = command;
 }
 
-bool ScopeBase::validate_command()
-{
-    if (this->command.length() < 6)
-    {
-        Helpers::error(F("Malformed command!"));
-        return false;
-    }
-
-    return true;
-}
-
 bool ScopeBase::parse_command_indices()
 {
     this->idx_record_length = this->command.indexOf(':');

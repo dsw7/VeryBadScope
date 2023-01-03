@@ -6,7 +6,7 @@ def test_roll_1(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Malformed command!'
+    assert message == 'Malformed command! Missing one or more colons'
 
 def test_roll_2(connection: SerialConnection) -> None:
 

@@ -38,11 +38,6 @@ void Roll::roll()
 
 void Roll::acquire_data()
 {
-    if (not this->validate_command())
-    {
-        return;
-    }
-
     if (not this->parse_command_indices())
     {
         return;

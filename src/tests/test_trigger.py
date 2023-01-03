@@ -6,4 +6,4 @@ def test_trigger_1(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Malformed command!'
+    assert message == 'Malformed command! Missing one or more colons'
