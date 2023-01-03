@@ -14,9 +14,9 @@ def main(context: click.core.Context, **configs: Dict[str, Union[bool, str]]) ->
 def hello(obj: Dict[str, Union[bool, str]]) -> None:
     commands.command_hello(**obj)
 
-@main.command(help='Collect a trace')
-@click.option('-n', '--count', default=5, help='Specify number of reads', metavar='<num-reads>')
-@click.option('-r', '--time-range', default=1000, help='Specify time range to read over', metavar='<microseconds>')
+@main.command(help='Collect a trace without any triggering')
+@click.option('-n', '--record-length', default=5, help='Specify number of reads', metavar='<num-reads>')
+@click.option('-r', '--measurement-duration', default=1000, help='Specify time range to read over', metavar='<microseconds>')
 @click.option('-p', '--plot', is_flag=True, help='Plot results')
 @click.pass_obj
 def roll(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
