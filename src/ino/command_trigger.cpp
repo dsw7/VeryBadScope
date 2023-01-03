@@ -55,12 +55,12 @@ bool Trigger::parse_trigger_level()
         return false;
     }
 
-    if (this->trigger_level < 0.1)
+    if (this->trigger_level < 20)
     {
         Helpers::error(F("Trigger level must be at least 0.1 volts!"));
         return false;
     }
-    else if (this->trigger_level > 5)
+    else if (this->trigger_level > 1023)
     {
         Helpers::error(F("Trigger level cannot exceed 5 volts!"));
         return false;
@@ -73,14 +73,35 @@ void Trigger::trigger()
 {
     static unsigned int read_pin = A0;
 
-    unsigned int v_t[this->record_length] = {0};
+    int v_t[this->record_length] = {0};
     unsigned long time_usec[this->record_length] = {0};
 
-    for (unsigned int i = 0; i < this->record_length; ++i)
+    int v_t_a = 0;
+    int v_t_b = ::analogRead(read_pin);
+    unsigned long t = 0;
+
+    bool enable_counter = false;
+    unsigned int idx = 0;
+
+    while (idx < this->record_length)
     {
-        v_t[i] = ::analogRead(read_pin);
-        time_usec[i] = ::micros();
+        v_t_a = v_t_b;
+        v_t_b = ::analogRead(read_pin);
+
+        t = ::micros();
         ::delayMicroseconds(this->period);
+
+        if ((v_t_b - v_t_a) >= this->trigger_level)
+        {
+            enable_counter = true;
+        }
+
+        if (enable_counter)
+        {
+            time_usec[idx] = t;
+            v_t[idx] = v_t_b;
+            ++idx;
+        }
     }
 
     ::Serial.print(F("1;"));
