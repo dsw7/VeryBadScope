@@ -30,7 +30,7 @@ def test_roll_1(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Malformed roll command!'
+    assert message == 'Malformed command!'
 
 def test_roll_2(connection: SerialConnection) -> None:
 
