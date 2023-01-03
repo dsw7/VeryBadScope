@@ -7,3 +7,27 @@ def test_trigger_1(connection: SerialConnection) -> None:
 
     assert not rv
     assert message == 'Malformed command! Missing one or more colons'
+
+def test_trigger_2(connection: SerialConnection) -> None:
+
+    connection.send_message('trigger:5')
+    rv, message = connection.receive_message()
+
+    assert not rv
+    assert message == 'Malformed command! Missing one or more colons'
+
+def test_trigger_3(connection: SerialConnection) -> None:
+
+    connection.send_message('trigger:5:1000')
+    rv, message = connection.receive_message()
+
+    assert not rv
+    assert message == 'Malformed command! Missing one or more colons'
+
+def test_trigger_4(connection: SerialConnection) -> None:
+
+    connection.send_message('trigger:5:1000:rising')
+    rv, message = connection.receive_message()
+
+    assert not rv
+    assert message == 'Malformed command! Missing one or more colons'
