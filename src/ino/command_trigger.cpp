@@ -26,6 +26,24 @@ bool Trigger::parse_trigger_specific_indices()
     return true;
 }
 
+bool Trigger::parse_trigger()
+{
+    this->trigger_type = command.substring(this->idx_trigger + 1, this->idx_trigger_level).toInt();
+
+    if (this->trigger_type == 0)
+    {
+        Helpers::error(F("Could not parse trigger type!"));
+        return false;
+    }
+    else if ((this->record_length != "rising") or (this->record_length != "falling"))
+    {
+        Helpers::error(F("Invalid trigger type!"));
+        return false;
+    }
+
+    return true;
+}
+
 void Trigger::trigger()
 {
     static unsigned int read_pin = A0;
@@ -77,6 +95,11 @@ void Trigger::acquire_data()
     }
 
     if (not this->parse_measurement_duration())
+    {
+        return;
+    }
+
+    if (not this->parse_trigger())
     {
         return;
     }
