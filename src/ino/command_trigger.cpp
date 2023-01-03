@@ -91,7 +91,8 @@ void Trigger::trigger()
         t = ::micros();
         ::delayMicroseconds(this->period);
 
-        if ((v_t_b - v_t_a) >= this->trigger_level)
+        // TODO: work in means of triggering on falling edge
+        if ((v_t_a - v_t_b) >= this->trigger_level)
         {
             count = true;
         }

@@ -56,7 +56,7 @@ def command_roll(**cli_params: Dict[str, Union[bool, str]]) -> None:
 
 def command_trigger(**cli_params: Dict[str, Union[bool, str]]) -> None:
 
-    secho('> Reading data from device', fg='yellow')
+    secho('> Waiting on trigger...', fg='yellow')
 
     record_length = cli_params['record_length']
     measurement_duration = cli_params['measurement_duration']
