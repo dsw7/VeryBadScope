@@ -22,5 +22,13 @@ def hello(obj: Dict[str, Union[bool, str]]) -> None:
 def roll(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
     commands.command_roll(**obj, **options)
 
+@main.command(help='Collect a trace with triggering')
+@click.option('-n', '--record-length', default=5, help='Specify number of reads after the trigger', metavar='<num-reads>')
+@click.option('-r', '--measurement-duration', default=1000, help='Specify time range to read over', metavar='<microseconds>')
+@click.option('-p', '--plot', is_flag=True, help='Plot results')
+@click.pass_obj
+def trigger(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
+    commands.command_trigger(**obj, **options)
+
 if __name__ == '__main__':
     main()

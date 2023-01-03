@@ -53,3 +53,40 @@ def command_roll(**cli_params: Dict[str, Union[bool, str]]) -> None:
         helpers.plot(times_n, voltages_n)
     else:
         helpers.peek(times_n, voltages_n)
+
+def command_trigger(**cli_params: Dict[str, Union[bool, str]]) -> None:
+
+    secho('> Reading data from device', fg='yellow')
+
+    record_length = cli_params['record_length']
+    measurement_duration = cli_params['measurement_duration']
+
+    result_v = None
+    result_t = None
+
+    with SerialConnection(**cli_params) as connection:
+
+        start = perf_counter_ns()
+        connection.send_message(f'trigger:{record_length}:{measurement_duration}')
+
+        rv, result_v = connection.receive_message()
+        if not rv:
+            sys.exit(result_v)
+
+        rv, result_t = connection.receive_message()
+        if not rv:
+            sys.exit(result_t)
+
+        end = (perf_counter_ns() - start) / 1_000_000
+        secho(f'> Round trip time: {end} ms', fg='yellow')
+
+    times = helpers.results_to_ints(result_t)
+    voltages = helpers.results_to_ints(result_v)
+
+    times_n = helpers.normalize_time_series(times)
+    voltages_n = helpers.normalize_voltage_series(voltages)
+
+    if cli_params['plot']:
+        helpers.plot(times_n, voltages_n)
+    else:
+        helpers.peek(times_n, voltages_n)
