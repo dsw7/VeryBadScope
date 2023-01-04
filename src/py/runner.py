@@ -1,5 +1,6 @@
 from typing import Dict, Union
 import click
+from command_hello import command_hello
 import commands
 
 @click.group()
@@ -12,7 +13,7 @@ def main(context: click.core.Context, **configs: Dict[str, Union[bool, str]]) ->
 @main.command(help='Handshake with device')
 @click.pass_obj
 def hello(obj: Dict[str, Union[bool, str]]) -> None:
-    commands.command_hello(**obj)
+    command_hello(**obj)
 
 @main.command(help='Collect a trace without any triggering')
 @click.option('-n', '--record-length', default=5, help='Specify number of reads', metavar='<num-reads>')

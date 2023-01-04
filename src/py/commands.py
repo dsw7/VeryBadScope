@@ -5,18 +5,6 @@ from click import secho
 from serial_connection import SerialConnection
 import helpers
 
-def command_hello(**cli_params: Dict[str, Union[bool, str]]) -> None:
-
-    secho('> Handshaking with device', fg='yellow')
-    rv = False
-
-    with SerialConnection(**cli_params) as connection:
-        connection.send_message('hello')
-        rv, error = connection.receive_message()
-
-        if not rv:
-            sys.exit(error)
-
 def command_roll(**cli_params: Dict[str, Union[bool, str]]) -> None:
 
     secho('> Reading data from device', fg='yellow')
