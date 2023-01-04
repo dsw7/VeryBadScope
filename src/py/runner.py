@@ -1,7 +1,8 @@
 from typing import Dict, Union
 import click
 from command_hello import command_hello
-import commands
+from command_roll import CommandRoll
+from command_trigger import CommandTrigger
 
 @click.group()
 @click.option('-p', '--port', default='/dev/ttyS2', help='Specify USB port', metavar='<com-port>')
@@ -22,7 +23,7 @@ def hello(obj: Dict[str, Union[bool, str]]) -> None:
 @click.option('-q', '--plot-path', default='/tmp/roll.png', help='Where to dump plot if --plot is specified', metavar='<path>')
 @click.pass_obj
 def roll(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
-    commands.command_roll(**obj, **options)
+    CommandRoll(**obj, **options).main()
 
 @main.command(help='Collect a trace with triggering')
 @click.option('-n', '--record-length', default=5, help='Specify number of reads after the trigger', metavar='<num-reads>')
@@ -33,7 +34,7 @@ def roll(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
 @click.option('-q', '--plot-path', default='/tmp/trigger.png', help='Where to dump plot if --plot is specified', metavar='<path>')
 @click.pass_obj
 def trigger(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
-    commands.command_trigger(**obj, **options)
+    CommandTrigger(**obj, **options).main()
 
 if __name__ == '__main__':
     main()
