@@ -1,5 +1,5 @@
-from tempfile import gettempdir
-from os import path
+import sys
+from pathlib import Path
 from typing import List
 from click import secho
 
@@ -27,10 +27,13 @@ def peek(results_t: List[int], results_v: List[float]) -> None:
     for t, v in zip(results_t[:5], results_v[:5]):
         secho('  {:<11} {}'.format(t, v), fg='blue')
 
-def plot(results_t: List[int], results_v: List[float]) -> None:
+def plot(results_t: List[int], results_v: List[float], save_path: str) -> None:
 
-    save_path = path.join(gettempdir(), 'test.png')
     secho(f'> Exporting plot to {save_path}', fg='yellow')
+    save_path = Path(save_path)
+
+    if not save_path.parent.exists():
+        sys.exit(f'Path {save_path.parent} does not exist!')
 
     # Lazy load
     import matplotlib.pyplot as plt

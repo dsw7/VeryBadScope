@@ -50,7 +50,7 @@ def command_roll(**cli_params: Dict[str, Union[bool, str]]) -> None:
     voltages_n = helpers.normalize_voltage_series(voltages)
 
     if cli_params['plot']:
-        helpers.plot(times_n, voltages_n)
+        helpers.plot(times_n, voltages_n, cli_params['plot_path'])
     else:
         helpers.peek(times_n, voltages_n)
 
@@ -89,6 +89,6 @@ def command_trigger(**cli_params: Dict[str, Union[bool, str]]) -> None:
     voltages_n = helpers.normalize_voltage_series(voltages)
 
     if cli_params['plot']:
-        helpers.plot(times_n, voltages_n)
+        helpers.plot(times_n, voltages_n, cli_params['plot_path'])
     else:
         helpers.peek(times_n, voltages_n)
