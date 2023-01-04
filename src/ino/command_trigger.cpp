@@ -83,25 +83,50 @@ void Trigger::trigger()
     bool count = false;
     unsigned int idx = 0;
 
-    while (idx < this->record_length)
+    if (this->trigger_type.equals("rising"))
     {
-        v_t_a = v_t_b;
-        v_t_b = ::analogRead(read_pin);
-
-        t = ::micros();
-        ::delayMicroseconds(this->period);
-
-        // TODO: work in means of triggering on falling edge
-        if ((v_t_a - v_t_b) >= this->trigger_level)
+        while (idx < this->record_length)
         {
-            count = true;
+            v_t_a = v_t_b;
+            v_t_b = ::analogRead(read_pin);
+
+            t = ::micros();
+            ::delayMicroseconds(this->period);
+
+            if ((v_t_b - v_t_a) >= this->trigger_level)
+            {
+                count = true;
+            }
+
+            if (count)
+            {
+                time_usec[idx] = t;
+                v_t[idx] = v_t_b;
+                ++idx;
+            }
         }
-
-        if (count)
+    }
+    else
+    {
+        while (idx < this->record_length)
         {
-            time_usec[idx] = t;
-            v_t[idx] = v_t_b;
-            ++idx;
+            v_t_a = v_t_b;
+            v_t_b = ::analogRead(read_pin);
+
+            t = ::micros();
+            ::delayMicroseconds(this->period);
+
+            if ((v_t_a - v_t_b) >= this->trigger_level)
+            {
+                count = true;
+            }
+
+            if (count)
+            {
+                time_usec[idx] = t;
+                v_t[idx] = v_t_b;
+                ++idx;
+            }
         }
     }
 
