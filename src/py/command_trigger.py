@@ -2,8 +2,7 @@ from time import perf_counter_ns
 import sys
 from click import secho
 from serial_connection import SerialConnection
-from command_base import CommandBase, T
-import helpers
+from command_base import CommandBase, T, volt_to_analog
 
 
 class CommandTrigger(CommandBase):
@@ -15,7 +14,7 @@ class CommandTrigger(CommandBase):
         record_length = self.cli_params['record_length']
         measurement_duration = self.cli_params['measurement_duration']
         trigger = self.cli_params['trigger']
-        level = helpers.volt_to_analog(self.cli_params['level'])
+        level = volt_to_analog(self.cli_params['level'])
 
         with SerialConnection(**self.cli_params) as connection:
 
