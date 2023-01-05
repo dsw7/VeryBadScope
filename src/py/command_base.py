@@ -39,6 +39,19 @@ class CommandBase(ABC):
         self.normalized_t = normalize_time_series(results_to_ints(self.raw_t))
         self.normalized_v = normalize_voltage_series(results_to_ints(self.raw_v))
 
+    def to_csv(self: T) -> None:
+
+        save_path = Path(self.cli_params['csv_path'])
+        secho(f'> Exporting CSV to {save_path}', fg='yellow')
+
+        if not save_path.parent.exists():
+            sys.exit(f'Path {save_path.parent} does not exist!')
+
+        with open(save_path, 'w') as f:
+            f.write('Time (microseconds),Voltage (volts)\n')
+            for t, v in zip(self.normalized_t, self.normalized_v):
+                f.write(f'{t},{v}\n')
+
     def peek(self: T) -> None:
 
         secho('> Summarizing first five reads from device', fg='yellow')
@@ -68,6 +81,9 @@ class CommandBase(ABC):
         plt.savefig(save_path, dpi=500)
 
     def export_data(self: T) -> None:
+
+        if self.cli_params['to_csv']:
+            self.to_csv()
 
         if self.cli_params['plot']:
             self.plot()

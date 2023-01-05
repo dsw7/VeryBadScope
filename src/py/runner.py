@@ -21,6 +21,8 @@ def hello(obj: Dict[str, Union[bool, str]]) -> None:
 @click.option('-r', '--measurement-duration', default=1000, help='Specify time range to read over', metavar='<microseconds>')
 @click.option('-p', '--plot', is_flag=True, help='Plot results')
 @click.option('-q', '--plot-path', default='/tmp/roll.png', help='Where to dump plot if --plot is specified', metavar='<path>')
+@click.option('-t', '--to-csv', is_flag=True, help='Export results to CSV')
+@click.option('-u', '--csv-path', default='/tmp/roll.csv', help='Where to dump CSV if --to-csv is specified', metavar='<path>')
 @click.pass_obj
 def roll(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
     CommandRoll(**obj, **options).main()
@@ -32,6 +34,8 @@ def roll(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
 @click.option('-l', '--level', default=4, help='Specify trigger level', metavar='<voltage>', type=float)
 @click.option('-p', '--plot', is_flag=True, help='Plot results')
 @click.option('-q', '--plot-path', default='/tmp/trigger.png', help='Where to dump plot if --plot is specified', metavar='<path>')
+@click.option('-t', '--to-csv', is_flag=True, help='Export results to CSV')
+@click.option('-u', '--csv-path', default='/tmp/trigger.csv', help='Where to dump CSV if --to-csv is specified', metavar='<path>')
 @click.pass_obj
 def trigger(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
     CommandTrigger(**obj, **options).main()
