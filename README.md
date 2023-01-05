@@ -34,6 +34,6 @@ $$
 
 | Component | Value          | Value in SI units |
 |:---------:|----------------|-------------------|
-| $R_1$     | 8.28 $k\omega$ | $\omega$          |
-| $R_2$     | 99.8 $k\omega$ | $\omega$          |
-| $C$       | 21.60 $\muF$   | $F$               |
+| $R_1$     | 8.28 $k\Omega$ | $\Omega$          |
+| $R_2$     | 99.8 $k\Omega$ | $\Omega$          |
+| $C$       | 21.60 $\mu F$  | $F$               |
