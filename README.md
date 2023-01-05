@@ -17,7 +17,7 @@ configuration. The circuit follows:
   <img width="250" src=./docs/raw_circuit.jpg>
 </p>
 
-This configuration consists of the 555 timer itself, two resistors, $$R_1$$ and $$R_2$$, and a capacitor $$C$$.
+This configuration consists of the 555 timer itself, two resistors, $R_1$ and $$R_2$$, and a capacitor $$C$$.
 The resistances $$R_1$$, $$R_2$$ and the capacitance $$C$$ serve as inputs into this system. These values can
 be adjusted to in order to tune the frequency and duty cycle of the output: a PWM signal. In an astable configuration,
 the frequency $$f$$ is given by:
