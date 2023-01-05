@@ -41,4 +41,9 @@ The values for $R_1$, $R_2$ and $C$ were measured for the above circuit and foll
 | $C$       | 9.52 $\mu F$    | 9.52 $\times$ $10^6$ $F$  |
 
 Inputting these values into the definition of $f$ yields a theoretical frequency of 1.06 $s^{-1}$.
-Correspondingly, the theoretical duty cycle $D$ is 0.84.
+Correspondingly, the theoretical duty cycle $D$ is 0.849. These values align reasonably with the actual output
+of this device:
+
+<p align="center">
+  <img src=./docs/example.jpg>
+</p>
