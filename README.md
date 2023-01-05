@@ -32,8 +32,10 @@ $$
 D = \frac{R_1 + R_2}{R_1 + 2R_2}
 $$
 
-| Component | Value          | Value in SI units |
-|:---------:|----------------|-------------------|
-| $R_1$     | 8.28 $k\Omega$ | $\Omega$          |
-| $R_2$     | 99.8 $k\Omega$ | $\Omega$          |
-| $C$       | 21.60 $\mu F$  | $F$               |
+The values for $R_1$, $R_2$ and $C$ were measured for the above circuit and follow:
+
+| Component | Value          | Value in SI units       |
+|:---------:|----------------|-------------------------|
+| $R_1$     | 8.28 $k\Omega$ | 8280.00 $\Omega$        |
+| $R_2$     | 99.8 $k\Omega$ | 99800.0 $\Omega$        |
+| $C$       | 21.60 $\mu F$  | 21.60 \times $10^6$ $F$ |
