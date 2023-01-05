@@ -52,15 +52,6 @@ class CommandBase(ABC):
             for t, v in zip(self.normalized_t, self.normalized_v):
                 f.write(f'{t},{v}\n')
 
-    def peek(self: T) -> None:
-
-        secho('> Summarizing first five reads from device', fg='yellow')
-        secho('> {:<11} {}'.format('Time (us)', 'Volts (V)'), fg='blue')
-        secho('> -----------------', fg='blue')
-
-        for t, v in zip(self.normalized_t[:5], self.normalized_v[:5]):
-            secho('  {:<11} {}'.format(t, v), fg='blue')
-
     def plot(self: T) -> None:
 
         save_path = Path(self.cli_params['plot_path'])
@@ -75,10 +66,19 @@ class CommandBase(ABC):
         plt.minorticks_on()
         plt.grid(color='navy', lw=0.5, which='major')
         plt.grid(color='navy', lw=0.25, which='minor')
-        plt.xlabel('Time ($\mu$s)')
+        plt.xlabel(r'Time ($\mu$s)')
         plt.ylabel('Voltage (V)')
         plt.plot(self.normalized_t, self.normalized_v, color='greenyellow', lw=0.75)
         plt.savefig(save_path, dpi=500)
+
+    def peek(self: T) -> None:
+
+        secho('> Summarizing first five reads from device', fg='yellow')
+        secho('> {:<11} {}'.format('Time (us)', 'Volts (V)'), fg='blue')
+        secho('> -----------------', fg='blue')
+
+        for t, v in zip(self.normalized_t[:5], self.normalized_v[:5]):
+            secho('  {:<11} {}'.format(t, v), fg='blue')
 
     def export_data(self: T) -> None:
 
