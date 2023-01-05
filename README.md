@@ -45,5 +45,5 @@ Correspondingly, the theoretical duty cycle $D$ is 0.849. These values align rea
 of this device:
 
 <p align="center">
-  <img src=./docs/example.jpg>
+  <img src=./docs/example.png>
 </p>
