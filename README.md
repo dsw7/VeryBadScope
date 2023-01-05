@@ -23,13 +23,13 @@ These values can be adjusted in order to tune the frequency and duty cycle of th
 astable configuration, the frequency $f$ is given by:
 
 $$
-f = \frac{1.44}{C(R_1 + 2R_2)} (1)
+f = \frac{1.44}{C(R_1 + 2R_2)}
 $$
 
 And the duty cycle $D$ is given by:
 
 $$
-D = \frac{R_1 + R_2}{R_1 + 2R_2} (2)
+D = \frac{R_1 + R_2}{R_1 + 2R_2}
 $$
 
 The values for $R_1$, $R_2$ and $C$ were measured for the above circuit and follow:
@@ -40,4 +40,5 @@ The values for $R_1$, $R_2$ and $C$ were measured for the above circuit and foll
 | $R_2$     | 21.60 $k\Omega$ | 21600.00 $\Omega$         |
 | $C$       | 9.52 $\mu F$    | 9.52 $\times$ $10^6$ $F$  |
 
-Inputting these values into equation (1) yields a theoretical frequency $f$ of 1.1 $s^{-1}$.
+Inputting these values into the definition of $f$ yields a theoretical frequency of 1.06 $s^{-1}$.
+Correspondingly, the theoretical duty cycle $D$ is 0.84.
