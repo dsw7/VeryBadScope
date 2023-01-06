@@ -5,6 +5,7 @@ A very bad oscilloscope!
     - [Uploading code to device](#uploading-code-to-device)
     - [Handshaking with the device](#handshaking-with-the-device)
 - [Usage](#usage)
+    - [Capturing a trace](#capturing-a-trace)
 - [Is this product reliable?](#is-this-product-reliable)
 
 ## Setup
@@ -36,6 +37,37 @@ And the device's onboard LED will blink 5 times in rapid succession.
 ## Usage
 All instructions herein assume that the sketch and associated C++ files have already been uploaded to the
 device. For more information, see [Uploading code to device](#uploading-code-to-device).
+
+### Capturing a trace
+To capture a trace, run:
+```
+$ python3 src/py/runner.py trigger -n 100 -r 1000000
+```
+In this example, the device was asked to collect a trace with a record length of 100 (i.e. 100 "reads") over a
+span of 1,000,000 microseconds, or 1 second (the measurement duration). This evaluates to approximately 10,000
+microseconds between a read. Upon dispatch, the command will return:
+```
+> Waiting on trigger...
+```
+The device waits for a trigger before beginning data acquisition. Once triggered, the device acquires the data
+and sends the data to the host via UART. Data acquisition and transmission is complete when the rount trip
+time is printed to the console:
+```
+> Round trip time: 1944.3388 ms
+```
+In this example, the round trip time accounts for both the measurement duration (1 second), and the time
+required to transmit the acquired data from the device to the host over a slow, serial connection
+(approximately 1 second). Once the round trip is complete, the device will summarize the first five reads as a
+sanity check:
+> Summarizing first five reads from device
+> Time (us)   Volts (V)
+> -----------------
+  0           4.731
+  10056       4.682
+  20120       4.726
+  30184       4.692
+  40248       4.697
+```
 
 ## Is this product reliable?
 This product was tested using the classic 555 timer ([TI
