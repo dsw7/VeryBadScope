@@ -30,7 +30,7 @@ device](#handshaking-with-the-device) step.
 ### Handshaking with the device
 Run a handshake to confirm that the device and the host can communicate. To handshake, run:
 ```
-$ python3 src/py/runner.py hello
+python3 src/py/runner.py hello
 > Handshaking with device
 ```
 If the device and host can communicate, the device will return the message:
@@ -57,7 +57,7 @@ The VCC and ground power rails were connected to the device's 5V and GND pins, a
 ### Capturing a trace
 To capture a trace, run:
 ```
-$ python3 src/py/runner.py trigger -n 100 -r 1000000
+python3 src/py/runner.py trigger -n 100 -r 1000000
 ```
 In this example, the device was asked to collect a trace with a record length of 100 (i.e. 100 "reads") over a
 span of 1,000,000 microseconds, or 1 second (the measurement duration). This evaluates to approximately 10,000
@@ -91,11 +91,11 @@ Peeking at the results, as was described in the [Capturing a trace](#capturing-a
 uninteresting. To actually visualize the results, the software can be coerced into exporting a plot by
 dispatching the runner with additional plotting arguments:
 ```
-$ python3 src/py/runner.py trigger -n 200 -r 1200000 -p -q /tmp/example_plotting.png
+python3 src/py/runner.py trigger -n 200 -r 1200000 -p -q /tmp/example_plotting.png
 ```
 Or using long options:
 ```
-$ python3 src/py/runner.py trigger -n 200 -r 1200000 --plot --plot-path /tmp/example_plotting.png
+python3 src/py/runner.py trigger -n 200 -r 1200000 --plot --plot-path /tmp/example_plotting.png
 ```
 Which will generate the following plot:
 <p align="center">
@@ -122,7 +122,7 @@ This software comes packaged with an additional command: "roll mode." In this mo
 device simply captures the first `-n` or `--record-length` number of reads and transmits this data to the host
 upon read termination. For example:
 ```
-$ python3 src/py/runner.py roll -n 200 -r 1200000 -p -q /tmp/example_roll.png
+python3 src/py/runner.py roll -n 200 -r 1200000 -p -q /tmp/example_roll.png
 ```
 Returns:
 <p align="center">
@@ -136,7 +136,7 @@ level and type can be chosen.
 For more accurate analysis, the data collected by the device can be exported to CSV format. For example, to
 export 10 reads that were gathered over a duration of 0.1 seconds:
 ```
-$ python3 src/py/runner.py roll -n 10 -r 100000 --to-csv
+python3 src/py/runner.py roll -n 10 -r 100000 --to-csv
 ```
 Which will print:
 ```
