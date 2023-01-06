@@ -62,6 +62,7 @@ class CommandBase(ABC):
 
         import matplotlib.pyplot as plt  # Lazy load for performance reasons
 
+        plt.figure(figsize=(6, 4), dpi=80)
         plt.style.use('dark_background')
         plt.minorticks_on()
         plt.grid(color='navy', lw=0.5, which='major')
@@ -69,7 +70,7 @@ class CommandBase(ABC):
         plt.xlabel(r'Time ($\mu$s)')
         plt.ylabel('Voltage (V)')
         plt.plot(self.normalized_t, self.normalized_v, color='greenyellow', lw=0.75)
-        plt.savefig(save_path, dpi=500)
+        plt.savefig(save_path) #, dpi=500)
 
     def peek(self: T) -> None:
 
