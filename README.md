@@ -9,6 +9,7 @@ A very bad oscilloscope!
     - [Visualizing the results](#visualizing-the-results)
     - [Triggering](#triggering)
     - [Roll mode](#roll-mode)
+    - [Exporting data for analysis](#exporting-data-for-analysis)
 - [Is this product reliable?](#is-this-product-reliable)
 
 ## Setup
@@ -118,6 +119,42 @@ Returns:
 
 This mode is useful for probing the characteristics of a waveform of interest such that an appropriate trigger
 level and type can be chosen.
+
+### Exporting data for analysis
+For more accurate analysis, the data collected by the device can be exported to CSV format. For example, to
+export 10 reads that were gathered over a duration of 0.1 seconds:
+```
+$ python3 src/py/runner.py roll -n 10 -r 100000 --to-csv
+```
+Which will print:
+```
+> Reading data from device
+> Round trip time: 195.7858 ms
+> Exporting CSV to /tmp/roll.csv
+> Summarizing first five reads from device
+> Time (us)   Volts (V)
+> -----------------
+  0           5.0
+  10064       4.897
+  20128       4.848
+  30184       4.868
+  40240       4.707
+```
+The contents of `/tmp/roll.csv` follow:
+```
+Time (microseconds),Voltage (volts)
+0,5.0
+10064,4.897
+20128,4.848
+30184,4.868
+40240,4.707
+50304,4.741
+60368,4.736
+70432,4.682
+80496,4.721
+90552,4.692
+```
+A custom CSV export path can be specified via `--csv-path`.
 
 ## Is this product reliable?
 This product was tested using the classic 555 timer ([TI
