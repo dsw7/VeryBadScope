@@ -5,6 +5,7 @@ A very bad oscilloscope!
     - [Uploading code to device](#uploading-code-to-device)
     - [Handshaking with the device](#handshaking-with-the-device)
 - [Usage](#usage)
+    - [Setting up the hardware](#setting-up-the-hardware)
     - [Capturing a trace](#capturing-a-trace)
     - [Visualizing the results](#visualizing-the-results)
     - [Triggering](#triggering)
@@ -41,6 +42,17 @@ And the device's onboard LED will blink 5 times in rapid succession.
 ## Usage
 All instructions herein assume that the sketch and associated C++ files have already been uploaded to the
 device. For more information, see [Uploading code to device](#uploading-code-to-device).
+
+### Setting up the hardware
+This device should be used to probe low power circuits only. To probe a circuit, connect the circuit's VCC to
+the device's 5V pin and connect the circuit's ground to the device's ground. Then connect the output to pin
+A0. For example, consider the following multivibrator:
+<p align="center">
+  <img src=./docs/example_circuit.png>
+</p>
+
+The VCC and ground power rails were connected to the device's 5V and GND pins, and the output under study (pin
+3 in this configuration) was connected to pin A0 (the white jumper).
 
 ### Capturing a trace
 To capture a trace, run:
