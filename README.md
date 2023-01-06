@@ -7,6 +7,7 @@ A very bad oscilloscope!
 - [Usage](#usage)
     - [Capturing a trace](#capturing-a-trace)
     - [Visualizing the results](#visualizing-the-results)
+    - [Triggering](#triggering)
 - [Is this product reliable?](#is-this-product-reliable)
 
 ## Setup
@@ -86,6 +87,19 @@ Which will generate the following plot:
 <p align="center">
   <img src=./docs/example_plotting.png>
 </p>
+
+### Triggering
+By default, the `trigger` command triggers on a rising edge. To trigger on a falling edge, pass the `falling`
+argument to `--trigger` instead:
+```
+python3 src/py/runner.py trigger -n 200 -r 1200000 --trigger=falling -p -q /tmp/example_plotting_falling.png`
+```
+The trigger level is set to 4 volts by default. On a falling edge trigger, note that data acquisition began
+only after the voltage dropped:
+<p align="center">
+  <img src=./docs/example_plotting_falling.png>
+</p>
+
 
 ## Is this product reliable?
 This product was tested using the classic 555 timer ([TI
