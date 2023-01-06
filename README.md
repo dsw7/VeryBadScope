@@ -59,6 +59,7 @@ In this example, the round trip time accounts for both the measurement duration 
 required to transmit the acquired data from the device to the host over a slow, serial connection
 (approximately 1 second). Once the round trip is complete, the device will summarize the first five reads as a
 sanity check:
+```
 > Summarizing first five reads from device
 > Time (us)   Volts (V)
 > -----------------
