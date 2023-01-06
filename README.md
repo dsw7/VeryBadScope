@@ -48,7 +48,7 @@ This device should be used to probe low power circuits only. To probe a circuit,
 the device's 5V pin and connect the circuit's ground to the device's ground. Then connect the output to pin
 A0. For example, consider the following multivibrator:
 <p align="center">
-  <img src=./docs/example_circuit.png>
+  <img width="500" src=./docs/example_circuit.png>
 </p>
 
 The VCC and ground power rails were connected to the device's 5V and GND pins, and the output under study (pin
