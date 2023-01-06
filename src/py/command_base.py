@@ -7,6 +7,9 @@ from click import secho
 T = TypeVar('T')
 ANALOG_TO_VOLT = 5 / 1023
 VOLT_TO_ANALOG = 1023 / 5
+PLOT_WIDTH_INCHES = 6
+PLOT_HEIGHT_INCHES = 4
+PLOT_DPI = 80
 
 def results_to_ints(results: str) -> List[int]:
     return [int(r) for r in results.strip().split()]
@@ -62,7 +65,10 @@ class CommandBase(ABC):
 
         import matplotlib.pyplot as plt  # Lazy load for performance reasons
 
-        plt.figure(figsize=(6, 4), dpi=80)
+        secho(f'> Plot will be {PLOT_WIDTH_INCHES} by {PLOT_HEIGHT_INCHES} inches', fg='yellow')
+        secho(f'> Or {PLOT_WIDTH_INCHES * PLOT_DPI} by {PLOT_HEIGHT_INCHES * PLOT_DPI} pixels', fg='yellow')
+
+        plt.figure(figsize=(PLOT_WIDTH_INCHES, PLOT_HEIGHT_INCHES), dpi=PLOT_DPI)
         plt.style.use('dark_background')
         plt.minorticks_on()
         plt.grid(color='navy', lw=0.5, which='major')
@@ -70,7 +76,7 @@ class CommandBase(ABC):
         plt.xlabel(r'Time ($\mu$s)')
         plt.ylabel('Voltage (V)')
         plt.plot(self.normalized_t, self.normalized_v, color='greenyellow', lw=0.75)
-        plt.savefig(save_path) #, dpi=500)
+        plt.savefig(save_path)
 
     def peek(self: T) -> None:
 
