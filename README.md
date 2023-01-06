@@ -8,6 +8,7 @@ A very bad oscilloscope!
     - [Capturing a trace](#capturing-a-trace)
     - [Visualizing the results](#visualizing-the-results)
     - [Triggering](#triggering)
+    - [Roll mode](#roll-mode)
 - [Is this product reliable?](#is-this-product-reliable)
 
 ## Setup
@@ -100,6 +101,23 @@ only after the voltage dropped:
   <img src=./docs/example_plotting_falling.png>
 </p>
 
+The trigger level can be adjusted using the `-l` or `--level` argument. The device will wait indefinitely for
+a trigger so an appropriate trigger level must be chosen.
+
+### Roll mode
+This software comes packaged with an additional command: "roll mode." In this mode, no triggering occurs. The
+device simply captures the first `-n` or `--record-length` number of reads and transmits this data to the host
+upon read termination. For example:
+```
+$ python3 src/py/runner.py roll -n 200 -r 1200000 -p -q /tmp/example_roll.png
+```
+Returns:
+<p align="center">
+  <img src=./docs/example_roll.png>
+</p>
+
+This mode is useful for probing the characteristics of a waveform of interest such that an appropriate trigger
+level and type can be chosen.
 
 ## Is this product reliable?
 This product was tested using the classic 555 timer ([TI
