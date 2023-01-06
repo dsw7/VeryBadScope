@@ -14,7 +14,7 @@ This product was tested using the classic 555 timer ([TI
 NE555P](https://www.ti.com/product/NE555/part-details/NE555P) to be exact) wired in an astable multivibrator
 configuration. The circuit follows:
 <p align="center">
-  <img width="250" src=./docs/raw_circuit.jpg>
+  <img width="200" src=./docs/555_timer_200.png>
 </p>
 
 This configuration consists of the 555 timer itself, two resistors, and a capacitor. The resistances of the
