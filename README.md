@@ -6,6 +6,7 @@ A very bad oscilloscope!
     - [Handshaking with the device](#handshaking-with-the-device)
 - [Usage](#usage)
     - [Capturing a trace](#capturing-a-trace)
+    - [Visualizing the results](#visualizing-the-results)
 - [Is this product reliable?](#is-this-product-reliable)
 
 ## Setup
@@ -69,6 +70,22 @@ sanity check:
   30184       4.692
   40248       4.697
 ```
+
+### Visualizing the results
+Peeking at the results, as was described in the [Capturing a trace](#capturing-a-trace) section, is relatively
+uninteresting. To actually visualize the results, the software can be coerced into exporting a plot by
+dispatching the runner with additional plotting arguments:
+```
+$ python3 src/py/runner.py trigger -n 200 -r 1200000 -p -q /tmp/example_plotting.png
+```
+Or using long options:
+```
+$ python3 src/py/runner.py trigger -n 200 -r 1200000 --plot --plot-path /tmp/example_plotting.png
+```
+Which will generate the following plot:
+<p align="center">
+  <img src=./docs/example_plotting.png>
+</p>
 
 ## Is this product reliable?
 This product was tested using the classic 555 timer ([TI
