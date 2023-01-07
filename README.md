@@ -108,14 +108,15 @@ argument to `--trigger` instead:
 ```
 python3 src/py/runner.py trigger -n 200 -r 1200000 --trigger=falling -p -q /tmp/example_plotting_falling.png`
 ```
-The trigger level is set to 4 volts by default. On a falling edge trigger, note that data acquisition began
-only after the voltage dropped:
+In edge triggered mode, the device will begin data acquisition when a sufficient delta exists between two
+reads. This delta is 4 volts by default. On a falling edge trigger, note that data acquisition began only
+after the voltage drop exceeded 4 volts between two reads:
 <p align="center">
   <img src=./docs/example_plotting_falling.png>
 </p>
 
-The trigger level can be adjusted using the `-l` or `--level` argument. The device will wait indefinitely for
-a trigger so an appropriate trigger level must be chosen.
+The trigger delta can be adjusted using the `-d` or `--delta` argument. The device will wait indefinitely for
+a trigger so an appropriate delta must be chosen.
 
 ### Roll mode
 This software comes packaged with an additional command: "roll mode." In this mode, no triggering occurs. The
@@ -130,7 +131,7 @@ Returns:
 </p>
 
 This mode is useful for probing the characteristics of a waveform of interest such that an appropriate trigger
-level and type can be chosen.
+type and level (or delta) can be chosen.
 
 ### Exporting data for analysis
 For more accurate analysis, the data collected by the device can be exported to CSV format. For example, to
