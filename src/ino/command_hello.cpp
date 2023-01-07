@@ -1,4 +1,4 @@
-#include "command_connection_test.h"
+#include "command_hello.h"
 
 #include "helpers.h"
 

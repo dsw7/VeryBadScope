@@ -1,4 +1,4 @@
-#include "command_trigger.h"
+#include "command_edge.h"
 
 #include "helpers.h"
 
