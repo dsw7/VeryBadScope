@@ -5,8 +5,9 @@
 namespace Command
 {
 
-bool Edge::parse_trigger_specific_indices()
+bool Edge::parse_edge_command_specific_indices()
 {
+    // Ensure that "rising" can be parsed from "edge:5:1000:rising:818"
     this->idx_trigger = this->command.indexOf(':', this->idx_measurement_duration + 1);
 
     if (this->idx_trigger < 0)
@@ -15,6 +16,7 @@ bool Edge::parse_trigger_specific_indices()
         return false;
     }
 
+    // Ensure that "818" can be parsed from "edge:5:1000:rising:818"
     this->idx_trigger_delta = this->command.indexOf(':', this->idx_trigger + 1);
 
     if (this->idx_trigger_delta < 0)
@@ -28,6 +30,8 @@ bool Edge::parse_trigger_specific_indices()
 
 bool Edge::parse_trigger()
 {
+    // Parse "rising" from incoming command "edge:5:1000:rising:818"
+
     this->trigger_type = command.substring(this->idx_trigger + 1, this->idx_trigger_delta);
 
     if (this->trigger_type == 0)
@@ -47,6 +51,8 @@ bool Edge::parse_trigger()
 
 bool Edge::parse_trigger_delta()
 {
+    // Parse "818" from incoming command "edge:5:1000:rising:818"
+
     this->trigger_delta = command.substring(this->idx_trigger_delta + 1).toInt();
 
     if (this->trigger_delta == 0)

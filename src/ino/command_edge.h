@@ -18,7 +18,7 @@ namespace Command
             ::String trigger_type = "rising";
             int trigger_delta = 0;
 
-            bool parse_trigger_specific_indices();
+            bool parse_edge_command_specific_indices();
             bool parse_trigger();
             bool parse_trigger_delta();
             void trigger();
