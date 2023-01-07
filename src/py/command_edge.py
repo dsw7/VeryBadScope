@@ -5,7 +5,7 @@ from serial_connection import SerialConnection
 from command_base import CommandBase, T, volt_to_analog
 
 
-class CommandTrigger(CommandBase):
+class CommandEdgeTrigger(CommandBase):
 
     def acquire_data(self: T) -> None:
 

@@ -2,7 +2,7 @@ from typing import Dict, Union
 import click
 from command_hello import command_hello
 from command_roll import CommandRoll
-from command_trigger import CommandTrigger
+from command_edge import CommandEdgeTrigger
 
 @click.group()
 @click.option('-p', '--port', default='/dev/ttyS2', help='Specify USB port', metavar='<com-port>')
@@ -38,7 +38,7 @@ def roll(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
 @click.option('-u', '--csv-path', default='/tmp/edge.csv', help='Where to dump CSV if --to-csv is specified', metavar='<path>')
 @click.pass_obj
 def edge(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
-    CommandTrigger(**obj, **options).main()
+    CommandEdgeTrigger(**obj, **options).main()
 
 if __name__ == '__main__':
     main()
