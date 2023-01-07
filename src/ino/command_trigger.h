@@ -13,14 +13,14 @@ namespace Command
 
         private:
             int idx_trigger = 0;
-            int idx_trigger_level = 0;
+            int idx_trigger_delta = 0;
 
             ::String trigger_type = "rising";
-            int trigger_level = 0;
+            int trigger_delta = 0;
 
             bool parse_trigger_specific_indices();
             bool parse_trigger();
-            bool parse_trigger_level();
+            bool parse_trigger_delta();
             void trigger();
     };
 }

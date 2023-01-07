@@ -15,9 +15,9 @@ bool Trigger::parse_trigger_specific_indices()
         return false;
     }
 
-    this->idx_trigger_level = this->command.indexOf(':', this->idx_trigger + 1);
+    this->idx_trigger_delta = this->command.indexOf(':', this->idx_trigger + 1);
 
-    if (this->idx_trigger_level < 0)
+    if (this->idx_trigger_delta < 0)
     {
         Helpers::error(F("Malformed command! Missing one or more colons"));
         return false;
@@ -28,7 +28,7 @@ bool Trigger::parse_trigger_specific_indices()
 
 bool Trigger::parse_trigger()
 {
-    this->trigger_type = command.substring(this->idx_trigger + 1, this->idx_trigger_level);
+    this->trigger_type = command.substring(this->idx_trigger + 1, this->idx_trigger_delta);
 
     if (this->trigger_type == 0)
     {
@@ -45,24 +45,24 @@ bool Trigger::parse_trigger()
     return false;
 }
 
-bool Trigger::parse_trigger_level()
+bool Trigger::parse_trigger_delta()
 {
-    this->trigger_level = command.substring(this->idx_trigger_level + 1).toInt();
+    this->trigger_delta = command.substring(this->idx_trigger_delta + 1).toInt();
 
-    if (this->trigger_level == 0)
+    if (this->trigger_delta == 0)
     {
-        Helpers::error(F("Could not parse trigger level!"));
+        Helpers::error(F("Could not parse trigger delta!"));
         return false;
     }
 
-    if (this->trigger_level < 20)
+    if (this->trigger_delta < 20)
     {
-        Helpers::error(F("Trigger level must be at least 0.1 volts!"));
+        Helpers::error(F("Trigger delta must be at least 0.1 volts!"));
         return false;
     }
-    else if (this->trigger_level > 1023)
+    else if (this->trigger_delta > 1023)
     {
-        Helpers::error(F("Trigger level cannot exceed 5 volts!"));
+        Helpers::error(F("Trigger delta cannot exceed 5 volts!"));
         return false;
     }
 
@@ -93,7 +93,7 @@ void Trigger::trigger()
             t = ::micros();
             ::delayMicroseconds(this->period);
 
-            if ((v_t_b - v_t_a) >= this->trigger_level)
+            if ((v_t_b - v_t_a) >= this->trigger_delta)
             {
                 count = true;
             }
@@ -116,7 +116,7 @@ void Trigger::trigger()
             t = ::micros();
             ::delayMicroseconds(this->period);
 
-            if ((v_t_a - v_t_b) >= this->trigger_level)
+            if ((v_t_a - v_t_b) >= this->trigger_delta)
             {
                 count = true;
             }
@@ -176,7 +176,7 @@ void Trigger::acquire_data()
         return;
     }
 
-    if (not this->parse_trigger_level())
+    if (not this->parse_trigger_delta())
     {
         return;
     }
