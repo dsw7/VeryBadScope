@@ -1,5 +1,5 @@
-#include "command_connection_test.h"
 #include "command_edge.h"
+#include "command_hello.h"
 #include "command_roll.h"
 #include "helpers.h"
 
@@ -26,15 +26,15 @@ void loop()
         }
         else if (command.startsWith(F("roll:")))
         {
-            Command::Roll roll;
-            roll.set_command(command);
-            roll.acquire_data();
+            Command::Roll cmd;
+            cmd.set_command(command);
+            cmd.acquire_data();
         }
         else if (command.startsWith(F("edge:")))
         {
-            Command::Trigger trigger;
-            trigger.set_command(command);
-            trigger.acquire_data();
+            Command::Edge cmd;
+            cmd.set_command(command);
+            cmd.acquire_data();
         }
         else if (command == F("exit"))
         {

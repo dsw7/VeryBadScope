@@ -5,7 +5,7 @@
 namespace Command
 {
 
-bool Trigger::parse_trigger_specific_indices()
+bool Edge::parse_trigger_specific_indices()
 {
     this->idx_trigger = this->command.indexOf(':', this->idx_measurement_duration + 1);
 
@@ -26,7 +26,7 @@ bool Trigger::parse_trigger_specific_indices()
     return true;
 }
 
-bool Trigger::parse_trigger()
+bool Edge::parse_trigger()
 {
     this->trigger_type = command.substring(this->idx_trigger + 1, this->idx_trigger_delta);
 
@@ -45,7 +45,7 @@ bool Trigger::parse_trigger()
     return false;
 }
 
-bool Trigger::parse_trigger_delta()
+bool Edge::parse_trigger_delta()
 {
     this->trigger_delta = command.substring(this->idx_trigger_delta + 1).toInt();
 
@@ -69,7 +69,7 @@ bool Trigger::parse_trigger_delta()
     return true;
 }
 
-void Trigger::trigger()
+void Edge::trigger()
 {
     static unsigned int read_pin = A0;
 
@@ -149,7 +149,7 @@ void Trigger::trigger()
     ::Serial.flush();
 }
 
-void Trigger::acquire_data()
+void Edge::acquire_data()
 {
     if (not this->parse_command_indices())
     {

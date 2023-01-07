@@ -6,7 +6,7 @@
 
 namespace Command
 {
-    class Trigger: public ScopeBase
+    class Edge: public ScopeBase
     {
         public:
             void acquire_data();
