@@ -19,7 +19,7 @@ class CommandEdgeTrigger(CommandBase):
         with SerialConnection(**self.cli_params) as connection:
 
             start = perf_counter_ns()
-            connection.send_message(f'trigger:{record_length}:{measurement_duration}:{trigger}:{delta}')
+            connection.send_message(f'edge:{record_length}:{measurement_duration}:{trigger}:{delta}')
 
             rv, self.raw_v = connection.receive_message()
             if not rv:
