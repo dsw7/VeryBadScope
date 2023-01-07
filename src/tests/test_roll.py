@@ -1,14 +1,7 @@
+from pytest import mark
 from src.py.serial_connection import SerialConnection
 
-def test_roll_1(connection: SerialConnection) -> None:
-
-    connection.send_message('roll:')
-    rv, message = connection.receive_message()
-
-    assert not rv
-    assert message == 'Malformed command! Missing one or more colons'
-
-def test_roll_2(connection: SerialConnection) -> None:
+def test_roll_working(connection: SerialConnection) -> None:
 
     connection.send_message('roll:5:1000')
 
@@ -18,66 +11,23 @@ def test_roll_2(connection: SerialConnection) -> None:
     rv, _ = connection.receive_message()  # times
     assert rv
 
-def test_roll_3(connection: SerialConnection) -> None:
+PAIRS_ROLL = [
+    ('roll:', 'Malformed command! Missing one or more colons'),
+    ('roll::1000', 'Could not parse record length!'),
+    ('roll:abc:1000', 'Could not parse record length!'),
+    ('roll:-1:1000', 'Record length must be at least 5 reads!'),
+    ('roll:5:', 'Could not parse measurement duration!'),
+    ('roll:5:abc', 'Could not parse measurement duration!'),
+    ('roll:5:-1', 'Minimum measurement duration is 1000 microseconds!'),
+    ('roll:10:1000', 'Computed period is too short. Try a greater range to count ratio!'),
+    ('roll:5:2000000', 'Computed period is too long. Try a lesser range to count ratio!')
+]
 
-    connection.send_message('roll::1000')
+@mark.parametrize('command, error', PAIRS_ROLL)
+def test_roll_errors(connection: SerialConnection, command: str, error: str) -> None:
+
+    connection.send_message(command)
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Could not parse record length!'
-
-def test_roll_4(connection: SerialConnection) -> None:
-
-    connection.send_message('roll:abc:1000')
-    rv, message = connection.receive_message()
-
-    assert not rv
-    assert message == 'Could not parse record length!'
-
-def test_roll_5(connection: SerialConnection) -> None:
-
-    connection.send_message('roll:-1:1000')
-    rv, message = connection.receive_message()
-
-    assert not rv
-    assert message == 'Record length must be at least 5 reads!'
-
-def test_roll_6(connection: SerialConnection) -> None:
-
-    connection.send_message('roll:5:')
-    rv, message = connection.receive_message()
-
-    assert not rv
-    assert message == 'Could not parse measurement duration!'
-
-def test_roll_7(connection: SerialConnection) -> None:
-
-    connection.send_message('roll:5:abc')
-    rv, message = connection.receive_message()
-
-    assert not rv
-    assert message == 'Could not parse measurement duration!'
-
-def test_roll_8(connection: SerialConnection) -> None:
-
-    connection.send_message('roll:5:-1')
-    rv, message = connection.receive_message()
-
-    assert not rv
-    assert message == 'Minimum measurement duration is 1000 microseconds!'
-
-def test_roll_9(connection: SerialConnection) -> None:
-
-    connection.send_message('roll:10:1000')
-    rv, message = connection.receive_message()
-
-    assert not rv
-    assert message == 'Computed period is too short. Try a greater range to count ratio!'
-
-def test_roll_10(connection: SerialConnection) -> None:
-
-    connection.send_message('roll:5:2000000')
-    rv, message = connection.receive_message()
-
-    assert not rv
-    assert message == 'Computed period is too long. Try a lesser range to count ratio!'
+    assert message == error
