@@ -1,5 +1,6 @@
 #include "command_edge.h"
 #include "command_hello.h"
+#include "command_level.h"
 #include "command_roll.h"
 #include "helpers.h"
 
@@ -33,6 +34,12 @@ void loop()
         else if (command.startsWith(F("edge:")))
         {
             Command::Edge cmd;
+            cmd.set_command(command);
+            cmd.acquire_data();
+        }
+        else if (command.startsWith(F("level:")))
+        {
+            Command::Level cmd;
             cmd.set_command(command);
             cmd.acquire_data();
         }

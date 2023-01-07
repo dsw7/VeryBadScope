@@ -99,7 +99,7 @@ void Level::trigger()
             t = ::micros();
             ::delayMicroseconds(this->period);
 
-            if ((v_t_a < v_t_b) and (v_t_b - this->trigger_level < 0.05))
+            if ((v_t_a < v_t_b) and (abs(v_t_b - this->trigger_level) < 0.05))
             {
                 count = true;
             }
@@ -122,7 +122,7 @@ void Level::trigger()
             t = ::micros();
             ::delayMicroseconds(this->period);
 
-            if ((v_t_a > v_t_b) and (v_t_b - this->trigger_level < 0.05))
+            if ((v_t_a > v_t_b) and (abs(v_t_b - this->trigger_level) < 0.05))
             {
                 count = true;
             }
