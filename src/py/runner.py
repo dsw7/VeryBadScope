@@ -31,7 +31,7 @@ def roll(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
 @click.option('-n', '--record-length', default=5, help='Specify number of reads after the trigger', metavar='<num-reads>')
 @click.option('-r', '--measurement-duration', default=1000, help='Specify time range to read over', metavar='<microseconds>')
 @click.option('-t', '--trigger', type=click.Choice(['rising', 'falling']), default='rising', help='Specify trigger type')
-@click.option('-l', '--level', default=4, help='Specify trigger level', metavar='<voltage>', type=float)
+@click.option('-d', '--delta', default=4, help='Specify voltage difference that results in trigger', metavar='<voltage>', type=float)
 @click.option('-p', '--plot', is_flag=True, help='Plot results')
 @click.option('-q', '--plot-path', default='/tmp/trigger.png', help='Where to dump plot if --plot is specified', metavar='<path>')
 @click.option('-t', '--to-csv', is_flag=True, help='Export results to CSV')
