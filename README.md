@@ -8,7 +8,7 @@ A very bad oscilloscope!
     - [Setting up the hardware](#setting-up-the-hardware)
     - [Capturing a trace](#capturing-a-trace)
     - [Visualizing the results](#visualizing-the-results)
-    - [Triggering](#triggering)
+    - [Edge triggering](#edge-triggering)
     - [Roll mode](#roll-mode)
     - [Exporting data for analysis](#exporting-data-for-analysis)
 - [Is this product reliable?](#is-this-product-reliable)
@@ -57,7 +57,7 @@ The VCC and ground power rails were connected to the device's 5V and GND pins, a
 ### Capturing a trace
 To capture a trace, run:
 ```
-python3 src/py/runner.py trigger -n 100 -r 1000000
+python3 src/py/runner.py edge -n 100 -r 1000000
 ```
 In this example, the device was asked to collect a trace with a record length of 100 (i.e. 100 "reads") over a
 span of 1,000,000 microseconds, or 1 second (the measurement duration). This evaluates to approximately 10,000
@@ -91,22 +91,22 @@ Peeking at the results, as was described in the [Capturing a trace](#capturing-a
 uninteresting. To actually visualize the results, the software can be coerced into exporting a plot by
 dispatching the runner with additional plotting arguments:
 ```
-python3 src/py/runner.py trigger -n 200 -r 1200000 -p -q /tmp/example_plotting.png
+python3 src/py/runner.py edge -n 200 -r 1200000 -p -q /tmp/example_plotting.png
 ```
 Or using long options:
 ```
-python3 src/py/runner.py trigger -n 200 -r 1200000 --plot --plot-path /tmp/example_plotting.png
+python3 src/py/runner.py edge -n 200 -r 1200000 --plot --plot-path /tmp/example_plotting.png
 ```
 Which will generate the following plot:
 <p align="center">
   <img src=./docs/example_plotting.png>
 </p>
 
-### Triggering
-By default, the `trigger` command triggers on a rising edge. To trigger on a falling edge, pass the `falling`
+### Edge triggering
+By default, the `edge` command triggers on a rising edge. To trigger on a falling edge, pass the `falling`
 argument to `--trigger` instead:
 ```
-python3 src/py/runner.py trigger -n 200 -r 1200000 --trigger=falling -p -q /tmp/example_plotting_falling.png`
+python3 src/py/runner.py edge -n 200 -r 1200000 --trigger=falling -p -q /tmp/example_plotting_falling.png`
 ```
 In edge triggered mode, the device will begin data acquisition when a sufficient delta exists between two
 reads. This delta is 4 volts by default. On a falling edge trigger, note that data acquisition began only
