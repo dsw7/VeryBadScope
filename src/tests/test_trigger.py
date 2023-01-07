@@ -54,7 +54,7 @@ def test_trigger_7(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Could not parse trigger level!'
+    assert message == 'Could not parse trigger delta!'
 
 def test_trigger_8(connection: SerialConnection) -> None:
 
@@ -62,7 +62,7 @@ def test_trigger_8(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Trigger level must be at least 0.1 volts!'
+    assert message == 'Trigger delta must be at least 0.1 volts!'
 
 def test_trigger_9(connection: SerialConnection) -> None:
 
@@ -70,4 +70,4 @@ def test_trigger_9(connection: SerialConnection) -> None:
     rv, message = connection.receive_message()
 
     assert not rv
-    assert message == 'Trigger level cannot exceed 5 volts!'
+    assert message == 'Trigger delta cannot exceed 5 volts!'
