@@ -2,6 +2,8 @@
 
 #include "helpers.h"
 
+const int EPSILON = 15; // pass this from CLI
+
 namespace Command
 {
 
@@ -84,6 +86,11 @@ void Level::trigger()
 
     int v_t_a = 0;
     int v_t_b = ::analogRead(read_pin);
+
+    // https://www.arduino.cc/reference/en/language/functions/math/abs/
+    // See notes and warnings - not a good idea to compute delta inside abs
+    int delta = 0;
+
     unsigned long t = 0;
 
     bool count = false;
@@ -99,7 +106,9 @@ void Level::trigger()
             t = ::micros();
             ::delayMicroseconds(this->period);
 
-            if ((v_t_a < v_t_b) and (abs(v_t_b - this->trigger_level) < 0.05))
+            delta = v_t_b - this->trigger_level;
+
+            if ((v_t_a < v_t_b) and (abs(delta) < ::EPSILON))
             {
                 count = true;
             }
@@ -122,7 +131,9 @@ void Level::trigger()
             t = ::micros();
             ::delayMicroseconds(this->period);
 
-            if ((v_t_a > v_t_b) and (abs(v_t_b - this->trigger_level) < 0.05))
+            delta = v_t_b - this->trigger_level;
+
+            if ((v_t_a > v_t_b) and (abs(delta) < ::EPSILON))
             {
                 count = true;
             }
