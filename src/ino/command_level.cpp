@@ -1,13 +1,13 @@
-#include "command_edge.h"
+#include "command_level.h"
 
 #include "helpers.h"
 
 namespace Command
 {
 
-bool Edge::parse_edge_command_specific_indices()
+bool Level::parse_level_command_specific_indices()
 {
-    // Ensure that "rising" can be parsed from "edge:5:1000:rising:818"
+    // Ensure that "rising" can be parsed from "level:5:1000:rising:818"
     this->idx_trigger = this->command.indexOf(':', this->idx_measurement_duration + 1);
 
     if (this->idx_trigger < 0)
@@ -16,10 +16,10 @@ bool Edge::parse_edge_command_specific_indices()
         return false;
     }
 
-    // Ensure that "818" can be parsed from "edge:5:1000:rising:818"
-    this->idx_trigger_delta = this->command.indexOf(':', this->idx_trigger + 1);
+    // Ensure that "818" can be parsed from "level:5:1000:rising:818"
+    this->idx_trigger_level = this->command.indexOf(':', this->idx_trigger + 1);
 
-    if (this->idx_trigger_delta < 0)
+    if (this->idx_trigger_level < 0)
     {
         Helpers::error(F("Malformed command! Missing one or more colons"));
         return false;
@@ -28,11 +28,11 @@ bool Edge::parse_edge_command_specific_indices()
     return true;
 }
 
-bool Edge::parse_trigger()
+bool Level::parse_trigger()
 {
-    // Parse "rising" from incoming command "edge:5:1000:rising:818"
+    // Parse "rising" from incoming command "level:5:1000:rising:818"
 
-    this->trigger_type = command.substring(this->idx_trigger + 1, this->idx_trigger_delta);
+    this->trigger_type = command.substring(this->idx_trigger + 1, this->idx_trigger_level);
 
     if (this->trigger_type == 0)
     {
@@ -49,33 +49,33 @@ bool Edge::parse_trigger()
     return false;
 }
 
-bool Edge::parse_trigger_delta()
+bool Level::parse_trigger_level()
 {
-    // Parse "818" from incoming command "edge:5:1000:rising:818"
+    // Parse "818" from incoming command "level:5:1000:rising:818"
 
-    this->trigger_delta = command.substring(this->idx_trigger_delta + 1).toInt();
+    this->trigger_level = command.substring(this->idx_trigger_level + 1).toInt();
 
-    if (this->trigger_delta == 0)
+    if (this->trigger_level == 0)
     {
-        Helpers::error(F("Could not parse trigger delta!"));
+        Helpers::error(F("Could not parse trigger level!"));
         return false;
     }
 
-    if (this->trigger_delta < 20)
+    if (this->trigger_level < 5)
     {
-        Helpers::error(F("Trigger delta must be at least 0.1 volts!"));
+        Helpers::error(F("Trigger level must be at least 0.025 volts!"));
         return false;
     }
-    else if (this->trigger_delta > 1023)
+    else if (this->trigger_level > 1023)
     {
-        Helpers::error(F("Trigger delta cannot exceed 5 volts!"));
+        Helpers::error(F("Trigger level cannot exceed 5 volts!"));
         return false;
     }
 
     return true;
 }
 
-void Edge::trigger()
+void Level::trigger()
 {
     static unsigned int read_pin = A0;
 
@@ -99,7 +99,7 @@ void Edge::trigger()
             t = ::micros();
             ::delayMicroseconds(this->period);
 
-            if ((v_t_b - v_t_a) >= this->trigger_delta)
+            if ((v_t_a < v_t_b) and (v_t_b - this->trigger_level < 0.05))
             {
                 count = true;
             }
@@ -122,7 +122,7 @@ void Edge::trigger()
             t = ::micros();
             ::delayMicroseconds(this->period);
 
-            if ((v_t_a - v_t_b) >= this->trigger_delta)
+            if ((v_t_a > v_t_b) and (v_t_b - this->trigger_level < 0.05))
             {
                 count = true;
             }
@@ -155,14 +155,14 @@ void Edge::trigger()
     ::Serial.flush();
 }
 
-void Edge::acquire_data()
+void Level::acquire_data()
 {
     if (not this->parse_command_indices())
     {
         return;
     }
 
-    if (not this->parse_edge_command_specific_indices())
+    if (not this->parse_level_command_specific_indices())
     {
         return;
     }
@@ -182,7 +182,7 @@ void Edge::acquire_data()
         return;
     }
 
-    if (not this->parse_trigger_delta())
+    if (not this->parse_trigger_level())
     {
         return;
     }
