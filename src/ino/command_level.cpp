@@ -119,8 +119,6 @@ void Level::wait_for_trigger()
     // See notes and warnings - not a good idea to compute delta inside abs
     int delta = 0;
 
-    long uncorrected_period = this->measurement_duration / this->record_length;
-
     if (this->trigger_type.equals("rising"))
     {
         while (true)
@@ -128,7 +126,7 @@ void Level::wait_for_trigger()
             v_t_a = v_t_b;
             v_t_b = ::analogRead(this->read_pin);
 
-            ::delayMicroseconds(uncorrected_period);
+            ::delayMicroseconds(this->corrected_period);
 
             delta = v_t_b - this->trigger_level;
 
@@ -145,7 +143,7 @@ void Level::wait_for_trigger()
             v_t_a = v_t_b;
             v_t_b = ::analogRead(this->read_pin);
 
-            ::delayMicroseconds(uncorrected_period);
+            ::delayMicroseconds(this->corrected_period);
 
             delta = v_t_b - this->trigger_level;
 

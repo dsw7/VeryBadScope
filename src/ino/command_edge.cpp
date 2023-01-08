@@ -80,8 +80,6 @@ void Edge::wait_for_trigger()
     int v_t_a = 0;
     int v_t_b = ::analogRead(this->read_pin);
 
-    long uncorrected_period = this->measurement_duration / this->record_length;
-
     if (this->trigger_type.equals("rising"))
     {
         while (true)
@@ -89,7 +87,7 @@ void Edge::wait_for_trigger()
             v_t_a = v_t_b;
             v_t_b = ::analogRead(this->read_pin);
 
-            ::delayMicroseconds(uncorrected_period);
+            ::delayMicroseconds(this->corrected_period);
 
             if ((v_t_b - v_t_a) >= this->trigger_delta)
             {
@@ -104,7 +102,7 @@ void Edge::wait_for_trigger()
             v_t_a = v_t_b;
             v_t_b = ::analogRead(this->read_pin);
 
-            ::delayMicroseconds(uncorrected_period);
+            ::delayMicroseconds(this->corrected_period);
 
             if ((v_t_a - v_t_b) >= this->trigger_delta)
             {
