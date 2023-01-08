@@ -182,10 +182,15 @@ $$
 L - \epsilon \leq t \leq L + \epsilon
 $$
 
-For example, considering this wave triggered at `--level=2` and `--epsilon=0.075`:
+For example, consider this wave triggered at `--level=2` and `--epsilon=0.075`:
 <p align="center">
   <img src=docs/example_level_epsilon.png>
 </p>
+
+Triggering occurred at approximately `$L + \epsilon$` and in this case a smaller value for $\epsilon$ could be
+chosen, owing to the large number of reads (50 in this case) relative to the short measurement duration (10
+ms). A larger $\epsilon$ must be chosen for a decreasing record-length to measurement duration. Additionally,
+`$\epsilon` must not be set to too small a value, otherwise triggering may occur on noise in a noisy signal.
 
 ### Exporting data for analysis
 For more accurate analysis, the data collected by the device can be exported to CSV format. For example, to
