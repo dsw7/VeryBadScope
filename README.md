@@ -49,7 +49,7 @@ This device should be used to probe low power circuits only. To probe a circuit,
 the device's 5V pin and connect the circuit's ground to the device's ground. Then connect the output to pin
 A0. For example, consider the following multivibrator:
 <p align="center">
-  <img width="400" src=./docs/example_circuit.png>
+  <img width="400" src=docs/example_555_timer_on_breadboard.png>
 </p>
 
 The VCC and ground power rails were connected to the device's 5V and GND pins, and the output under study (pin
@@ -181,7 +181,7 @@ This product was tested using the classic 555 timer ([TI
 NE555P](https://www.ti.com/product/NE555/part-details/NE555P) to be exact) wired in an astable multivibrator
 configuration. The circuit follows:
 <p align="center">
-  <img width="200" src=./docs/555_timer_200.png>
+  <img width="200" src=./docs/example_555_timer.png>
 </p>
 
 This configuration consists of the 555 timer itself, two resistors, and a capacitor. The resistances of the
