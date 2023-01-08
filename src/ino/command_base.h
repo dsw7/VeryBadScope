@@ -11,7 +11,7 @@ namespace Command
             virtual void acquire_data() = 0;
 
         protected:
-            static unsigned int read_pin = A0;
+            unsigned int read_pin = A0;
             ::String command = "roll:5:1000";
 
             int idx_record_length = 0;
