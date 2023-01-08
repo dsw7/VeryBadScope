@@ -11,6 +11,7 @@ A very bad oscilloscope!
     - [Roll mode](#roll-mode)
     - [Triggering](#Triggering)
       - [Edge triggering](#edge-triggering)
+      - [Level triggering](#level-triggering)
     - [Exporting data for analysis](#exporting-data-for-analysis)
 - [Is this product reliable?](#is-this-product-reliable)
 
@@ -139,6 +140,14 @@ The transition that forces the trigger is termed the "delta" and can be specifie
 argument. Note that the delta is relative - a transition for 5V to 1.5V on a falling edge trigger will result
 in data acquisition with `--delta=3`, for example, given that the difference between 5V and 1.5V exceeds the
 delta. The device will wait indefinitely for a trigger so an appropriate delta must be chosen.
+
+#### Level triggering
+Many waves do not alternate between fixed minima and maxima - sinusoids and decaying exponentials immediately
+come to mind. Such waves do not wave an "edge" that can be used as a trigger. In this case, a level must
+instead be used as a trigger. First, start by dispatching a `roll` command in order to study the wave:
+<p align="center">
+  <img src=docs/example_roll_charging_discharging.png>
+</p>
 
 ### Exporting data for analysis
 For more accurate analysis, the data collected by the device can be exported to CSV format. For example, to
