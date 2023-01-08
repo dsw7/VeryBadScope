@@ -112,13 +112,11 @@ bool Level::parse_epsilon()
 
 void Level::trigger()
 {
-    static unsigned int read_pin = A0;
-
     int v_t[this->record_length] = {0};
     unsigned long time_usec[this->record_length] = {0};
 
     int v_t_a = 0;
-    int v_t_b = ::analogRead(read_pin);
+    int v_t_b = ::analogRead(this->read_pin);
 
     // https://www.arduino.cc/reference/en/language/functions/math/abs/
     // See notes and warnings - not a good idea to compute delta inside abs
@@ -134,7 +132,7 @@ void Level::trigger()
         while (idx < this->record_length)
         {
             v_t_a = v_t_b;
-            v_t_b = ::analogRead(read_pin);
+            v_t_b = ::analogRead(this->read_pin);
 
             t = ::micros();
             ::delayMicroseconds(this->period);
@@ -159,7 +157,7 @@ void Level::trigger()
         while (idx < this->record_length)
         {
             v_t_a = v_t_b;
-            v_t_b = ::analogRead(read_pin);
+            v_t_b = ::analogRead(this->read_pin);
 
             t = ::micros();
             ::delayMicroseconds(this->period);

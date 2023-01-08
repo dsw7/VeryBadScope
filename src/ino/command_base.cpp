@@ -1,4 +1,4 @@
-#include "command_scope_base.h"
+#include "command_base.h"
 
 #include "helpers.h"
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "command_scope_base.h"
+#include "command_base.h"
 
 #include "Arduino.h"
 
@@ -21,6 +21,7 @@ namespace Command
             bool parse_edge_command_specific_indices();
             bool parse_trigger();
             bool parse_trigger_delta();
+            void start_reading_after_trigger();
             void trigger();
     };
 }

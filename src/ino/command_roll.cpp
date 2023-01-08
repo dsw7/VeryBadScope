@@ -5,14 +5,12 @@ namespace Command
 
 void Roll::roll()
 {
-    static unsigned int read_pin = A0;
-
     unsigned int v_t[this->record_length] = {0};
     unsigned long time_usec[this->record_length] = {0};
 
     for (unsigned int i = 0; i < this->record_length; ++i)
     {
-        v_t[i] = ::analogRead(read_pin);
+        v_t[i] = ::analogRead(this->read_pin);
         time_usec[i] = ::micros();
         ::delayMicroseconds(this->period);
     }
