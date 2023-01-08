@@ -1,9 +1,9 @@
 from pytest import mark
 from src.py.serial_connection import SerialConnection
 
-def test_roll_working(connection: SerialConnection) -> None:
+def test_roll_265_count(connection: SerialConnection) -> None:
 
-    connection.send_message('roll:5:1000')
+    connection.send_message('roll:265:1000000')
 
     rv, _ = connection.receive_message()  # voltage
     assert rv
