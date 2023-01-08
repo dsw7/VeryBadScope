@@ -135,7 +135,7 @@ void Level::trigger()
             v_t_b = ::analogRead(this->read_pin);
 
             t = ::micros();
-            ::delayMicroseconds(this->period);
+            ::delayMicroseconds(this->corrected_period);
 
             delta = v_t_b - this->trigger_level;
 
@@ -160,7 +160,7 @@ void Level::trigger()
             v_t_b = ::analogRead(this->read_pin);
 
             t = ::micros();
-            ::delayMicroseconds(this->period);
+            ::delayMicroseconds(this->corrected_period);
 
             delta = v_t_b - this->trigger_level;
 

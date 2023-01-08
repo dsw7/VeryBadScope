@@ -72,16 +72,16 @@ bool ScopeBase::compute_period()
     // On UNO, it takes about one hundred microseconds to read analog input
     // See: https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/
     // From my experimentation, the read time delay is 112 usecs
-    this->period = (this->measurement_duration / this->record_length) - 112;
+    this->corrected_period = (this->measurement_duration / this->record_length) - 112;
 
     // See: https://www.arduino.cc/reference/en/language/functions/time/delaymicroseconds/
     // For a description of these magic numbers
-    if (this->period < 3)
+    if (this->corrected_period < 3)
     {
         Helpers::error(F("Computed period is too short. Try a greater range to count ratio!"));
         return false;
     }
-    else if (this->period > 16383)
+    else if (this->corrected_period > 16383)
     {
         Helpers::error(F("Computed period is too long. Try a lesser range to count ratio!"));
         return false;

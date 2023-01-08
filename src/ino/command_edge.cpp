@@ -77,84 +77,78 @@ bool Edge::parse_trigger_delta()
 
 void Edge::start_reading_after_trigger()
 {
-}
-
-void Edge::trigger()
-{
     int v_t[this->record_length] = {0};
     unsigned long time_usec[this->record_length] = {0};
 
-    int v_t_a = 0;
-    int v_t_b = ::analogRead(this->read_pin);
-    unsigned long t = 0;
-
-    bool count = false;
     unsigned int idx = 0;
 
-    if (this->trigger_type.equals("rising"))
+    while (idx < this->record_length)
     {
-        while (idx < this->record_length)
-        {
-            v_t_a = v_t_b;
-            v_t_b = ::analogRead(this->read_pin);
+        time_usec[idx] = ::micros();
+        v_t[idx] = ::analogRead(this->read_pin);
+        ++idx;
 
-            t = ::micros();
-            ::delayMicroseconds(this->period);
-
-            if ((v_t_b - v_t_a) >= this->trigger_delta)
-            {
-                count = true;
-            }
-
-            if (count)
-            {
-                time_usec[idx] = t;
-                v_t[idx] = v_t_b;
-                ++idx;
-            }
-        }
-    }
-    else
-    {
-        while (idx < this->record_length)
-        {
-            v_t_a = v_t_b;
-            v_t_b = ::analogRead(this->read_pin);
-
-            t = ::micros();
-            ::delayMicroseconds(this->period);
-
-            if ((v_t_a - v_t_b) >= this->trigger_delta)
-            {
-                count = true;
-            }
-
-            if (count)
-            {
-                time_usec[idx] = t;
-                v_t[idx] = v_t_b;
-                ++idx;
-            }
-        }
+        ::delayMicroseconds(this->corrected_period);
     }
 
     ::Serial.print(F("1;"));
+
     for (unsigned int i = 0; i < this->record_length; ++i)
     {
         ::Serial.print(v_t[i]);
         ::Serial.print(' ');
     }
+
     ::Serial.println();
     ::Serial.flush();
 
     ::Serial.print(F("1;"));
+
     for (unsigned int i = 0; i < this->record_length; ++i)
     {
         ::Serial.print(time_usec[i]);
         ::Serial.print(' ');
     }
+
     ::Serial.println();
     ::Serial.flush();
+}
+
+void Edge::trigger()
+{
+    int v_t_a = 0;
+    int v_t_b = ::analogRead(this->read_pin);
+
+    if (this->trigger_type.equals("rising"))
+    {
+        while (true)
+        {
+            v_t_a = v_t_b;
+            v_t_b = ::analogRead(this->read_pin);
+
+            ::delayMicroseconds(this->corrected_period);
+
+            if ((v_t_b - v_t_a) >= this->trigger_delta)
+            {
+                break;
+            }
+        }
+    }
+    else
+    {
+        while (true)
+        {
+            v_t_a = v_t_b;
+            v_t_b = ::analogRead(this->read_pin);
+
+            ::delayMicroseconds(this->corrected_period);
+
+            if ((v_t_a - v_t_b) >= this->trigger_delta)
+            {
+                break;
+            }
+        }
+    }
 }
 
 void Edge::acquire_data()

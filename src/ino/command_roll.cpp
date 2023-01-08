@@ -12,7 +12,7 @@ void Roll::roll()
     {
         v_t[i] = ::analogRead(this->read_pin);
         time_usec[i] = ::micros();
-        ::delayMicroseconds(this->period);
+        ::delayMicroseconds(this->corrected_period);
     }
 
     ::Serial.print(F("1;"));
