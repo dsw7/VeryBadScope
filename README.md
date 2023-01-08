@@ -99,7 +99,7 @@ python3 src/py/runner.py roll -n 200 -r 1200000 --plot --plot-path /tmp/example_
 ```
 Which will generate the following plot:
 <p align="center">
-  <img src=./docs/example_roll.png>
+  <img src=docs/example_roll.png>
 </p>
 
 ### Roll mode
@@ -122,7 +122,7 @@ python3 src/py/runner.py edge -n 200 -r 1200000 -p -q /tmp/example_edge_rising.p
 ```
 In this mode, data acquisition began immediately upon the sharp transition of the wave from 0V to >4V:
 <p align="center">
-  <img src=./docs/example_edge_rising.png>
+  <img src=docs/example_edge_rising.png>
 </p>
 
 By default, the `edge` command triggers on a rising edge. To trigger on a falling edge, pass the `falling`
@@ -132,7 +132,7 @@ python3 src/py/runner.py edge -n 200 -r 1200000 --trigger=falling -p -q /tmp/exa
 ```
 In this case, data acquisition began immediately upon the transition of the wave from >4V to 0V:
 <p align="center">
-  <img src=./docs/example_edge_falling.png>
+  <img src=docs/example_edge_falling.png>
 </p>
 
 The transition that forces the trigger is termed the "delta" and can be specified via the `-d` or `--delta`
@@ -181,7 +181,7 @@ This product was tested using the classic 555 timer ([TI
 NE555P](https://www.ti.com/product/NE555/part-details/NE555P) to be exact) wired in an astable multivibrator
 configuration. The circuit follows:
 <p align="center">
-  <img width="200" src=./docs/example_555_timer.png>
+  <img width="200" src=docs/example_555_timer.png>
 </p>
 
 This configuration consists of the 555 timer itself, two resistors, and a capacitor. The resistances of the
@@ -212,5 +212,5 @@ Correspondingly, the theoretical duty cycle $D$ is 0.849. These values align rea
 of this device:
 
 <p align="center">
-  <img width="650" src=./docs/example.png>
+  <img width="650" src=docs/example.png>
 </p>
