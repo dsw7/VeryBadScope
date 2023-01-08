@@ -127,9 +127,9 @@ In this mode, data acquisition began immediately upon the sharp transition of th
 </p>
 
 By default, the `edge` command triggers on a rising edge. To trigger on a falling edge, pass the `falling`
-argument to `--trigger` instead:
+argument to `-t` or `--trigger` instead:
 ```
-python3 src/py/runner.py edge -n 200 -r 1200000 --trigger=falling -p -q /tmp/example_edge_falling.png
+python3 src/py/runner.py edge -n 200 -r 1200000 -t falling -p -q /tmp/example_edge_falling.png
 ```
 In this case, data acquisition began immediately upon the transition of the wave from >4V to 0V:
 <p align="center">
@@ -147,6 +147,24 @@ come to mind. Such waves do not wave an "edge" that can be used as a trigger. In
 instead be used as a trigger. First, start by dispatching a `roll` command in order to study the wave:
 <p align="center">
   <img src=docs/example_roll_charging_discharging.png>
+</p>
+
+Given this knowledge in hand, one can now trigger the data acquisition when the voltage reads 2V:
+```
+python3 src/py/runner.py level -n 200 -r 1200000 -l 2 -p -q /tmp/example_level_rising.png
+```
+Now the voltage intercept is approximately 2V:
+<p align="center">
+  <img src=docs/example_level_rising.png>
+</p>
+
+Note that the trigger occurred on a rising voltage. The trigger can instead be set on a falling voltage:
+```
+python3 src/py/runner.py level -n 200 -r 1200000 -t falling -l 2 -p -q /tmp/example_level_falling.png
+```
+Again, the voltage intercept is approximately 2V, but in this case the voltage falls post-trigger:
+<p align="center">
+  <img src=docs/example_level_falling.png>
 </p>
 
 ### Exporting data for analysis
