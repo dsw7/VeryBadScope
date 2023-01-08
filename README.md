@@ -57,17 +57,16 @@ The VCC and ground power rails were connected to the device's 5V and GND pins, a
 ### Capturing a trace
 To capture a trace, run:
 ```
-python3 src/py/runner.py edge -n 100 -r 1000000
+python3 src/py/runner.py roll -n 100 -r 1000000
 ```
-In this example, the device was asked to collect a trace with a record length of 100 (i.e. 100 "reads") over a
+In this example, the device is asked to collect a trace with a record length of 100 (i.e. 100 "reads") over a
 span of 1,000,000 microseconds, or 1 second (the measurement duration). This evaluates to approximately 10,000
 microseconds between a read. Upon dispatch, the command will return:
 ```
-> Waiting on trigger...
+> Reading data from device
 ```
-The device waits for a trigger before beginning data acquisition. Once triggered, the device acquires the data
-and sends the data to the host via UART. Data acquisition and transmission is complete when the rount trip
-time is printed to the console:
+The device will now acquire data. After both data acquisition and transmission are complete, the command will
+print the total round trip time to the console:
 ```
 > Round trip time: 1944.3388 ms
 ```
@@ -91,15 +90,15 @@ Peeking at the results, as was described in the [Capturing a trace](#capturing-a
 uninteresting. To actually visualize the results, the software can be coerced into exporting a plot by
 dispatching the runner with additional plotting arguments:
 ```
-python3 src/py/runner.py edge -n 200 -r 1200000 -p -q /tmp/example_plotting.png
+python3 src/py/runner.py roll -n 200 -r 1200000 -p -q /tmp/example_roll.png
 ```
 Or using long options:
 ```
-python3 src/py/runner.py edge -n 200 -r 1200000 --plot --plot-path /tmp/example_plotting.png
+python3 src/py/runner.py roll -n 200 -r 1200000 --plot --plot-path /tmp/example_roll.png
 ```
 Which will generate the following plot:
 <p align="center">
-  <img src=./docs/example_plotting.png>
+  <img src=./docs/example_roll.png>
 </p>
 
 ### Edge triggering
