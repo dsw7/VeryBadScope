@@ -46,6 +46,7 @@ def edge(obj: Dict[str, Union[bool, str]], **options: Dict[str, str]) -> None:
 @click.option('-r', '--measurement-duration', default=1000, help='Specify time range to read over', metavar='<microseconds>')
 @click.option('-t', '--trigger', type=click.Choice(['rising', 'falling']), default='rising', help='Specify trigger type')
 @click.option('-l', '--level', default=4, help='Specify level at which to trigger', metavar='<voltage>', type=float)
+@click.option('-e', '--epsilon', default=0.05, help='Specify uncertainty about trigger level', metavar='<voltage>', type=float)
 @click.option('-p', '--plot', is_flag=True, help='Plot results')
 @click.option('-q', '--plot-path', default='/tmp/level.png', help='Where to dump plot if --plot is specified', metavar='<path>')
 @click.option('-t', '--to-csv', is_flag=True, help='Export results to CSV')

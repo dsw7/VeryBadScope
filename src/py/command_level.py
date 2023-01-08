@@ -15,11 +15,12 @@ class CommandLevelTrigger(CommandBase):
         measurement_duration = self.cli_params['measurement_duration']
         trigger = self.cli_params['trigger']
         level = volt_to_analog(self.cli_params['level'])
+        epsilon = volt_to_analog(self.cli_params['epsilon'])
 
         with SerialConnection(**self.cli_params) as connection:
 
             start = perf_counter_ns()
-            connection.send_message(f'level:{record_length}:{measurement_duration}:{trigger}:{level}')
+            connection.send_message(f'level:{record_length}:{measurement_duration}:{trigger}:{level}:{epsilon}')
 
             rv, self.raw_v = connection.receive_message()
             if not rv:
