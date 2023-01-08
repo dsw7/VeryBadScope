@@ -174,13 +174,18 @@ microsecond resolution associated with the
 [micros()](https://www.arduino.cc/reference/en/language/functions/time/micros/) call which this software uses
 alongside [analogRead()](https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/) to
 acquire data. The uncertainly about the trigger level is termed the "epsilon" and can be specified using the
-`-e` or `--epsilon` argument. The absolute minimum epsilon is 0.025V and using such a small value may lead to
-non-triggering. As such, it is essential to experiment with the epsilon value if a wave cannot be triggered
+`-e` or `--epsilon` argument. The absolute minimum $\epsilon$ is 0.025V and using such a small value may lead to
+non-triggering. As such, it is essential to experiment with the $\epsilon$ value if a wave cannot be triggered
 under any circumstances. Generally, a trigger $t$ will occur "around" the trigger level $L$, that is,
 
 $$
-L - \epsilon \leq t \leg L + \epsilon
+L - \epsilon \leq t \leq L + \epsilon
 $$
+
+For example, considering this wave triggered at `--level=2` and `--epsilon=0.075`:
+<p align="center">
+  <img src=docs/example_level_epsilon.png>
+</p>
 
 ### Exporting data for analysis
 For more accurate analysis, the data collected by the device can be exported to CSV format. For example, to
