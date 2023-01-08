@@ -2,14 +2,12 @@
 
 #include "helpers.h"
 
-const int EPSILON = 15; // pass this from CLI
-
 namespace Command
 {
 
 bool Level::parse_level_command_specific_indices()
 {
-    // Ensure that "rising" can be parsed from "level:5:1000:rising:818"
+    // Ensure that "rising" can be parsed from "level:5:1000:rising:818:15"
     this->idx_trigger = this->command.indexOf(':', this->idx_measurement_duration + 1);
 
     if (this->idx_trigger < 0)
@@ -18,10 +16,19 @@ bool Level::parse_level_command_specific_indices()
         return false;
     }
 
-    // Ensure that "818" can be parsed from "level:5:1000:rising:818"
+    // Ensure that "818" can be parsed from "level:5:1000:rising:818:15"
     this->idx_trigger_level = this->command.indexOf(':', this->idx_trigger + 1);
 
     if (this->idx_trigger_level < 0)
+    {
+        Helpers::error(F("Malformed command! Missing one or more colons"));
+        return false;
+    }
+
+    // Ensure that "15" can be parsed from "level:5:1000:rising:818:15"
+    this->idx_epsilon = this->command.indexOf(':', this->idx_trigger_level + 1);
+
+    if (this->idx_epsilon < 0)
     {
         Helpers::error(F("Malformed command! Missing one or more colons"));
         return false;
@@ -32,7 +39,7 @@ bool Level::parse_level_command_specific_indices()
 
 bool Level::parse_trigger()
 {
-    // Parse "rising" from incoming command "level:5:1000:rising:818"
+    // Parse "rising" from incoming command "level:5:1000:rising:818:15"
 
     this->trigger_type = command.substring(this->idx_trigger + 1, this->idx_trigger_level);
 
@@ -53,7 +60,7 @@ bool Level::parse_trigger()
 
 bool Level::parse_trigger_level()
 {
-    // Parse "818" from incoming command "level:5:1000:rising:818"
+    // Parse "818" from incoming command "level:5:1000:rising:818:15"
 
     this->trigger_level = command.substring(this->idx_trigger_level + 1).toInt();
 
@@ -71,6 +78,32 @@ bool Level::parse_trigger_level()
     else if (this->trigger_level > 1023)
     {
         Helpers::error(F("Trigger level cannot exceed 5 volts!"));
+        return false;
+    }
+
+    return true;
+}
+
+bool Level::parse_epsilon()
+{
+    // Parse "15" from incoming command "level:5:1000:rising:818:15"
+
+    this->epsilon = command.substring(this->idx_epsilon + 1).toInt();
+
+    if (this->epsilon == 0)
+    {
+        Helpers::error(F("Could not parse epsilon!"));
+        return false;
+    }
+
+    if (this->epsilon < 10)
+    {
+        Helpers::error(F("Epsilon must be at least 0.05 volts!"));
+        return false;
+    }
+    else if (this->epsilon > 1023)
+    {
+        Helpers::error(F("Epsilon cannot exceed 5 volts!"));
         return false;
     }
 
@@ -108,7 +141,7 @@ void Level::trigger()
 
             delta = v_t_b - this->trigger_level;
 
-            if ((v_t_a < v_t_b) and (abs(delta) < ::EPSILON))
+            if ((v_t_a < v_t_b) and (abs(delta) <= this->epsilon))
             {
                 count = true;
             }
@@ -133,7 +166,7 @@ void Level::trigger()
 
             delta = v_t_b - this->trigger_level;
 
-            if ((v_t_a > v_t_b) and (abs(delta) < ::EPSILON))
+            if ((v_t_a > v_t_b) and (abs(delta) <= this->epsilon))
             {
                 count = true;
             }
@@ -194,6 +227,11 @@ void Level::acquire_data()
     }
 
     if (not this->parse_trigger_level())
+    {
+        return;
+    }
+
+    if (not this->parse_epsilon())
     {
         return;
     }
