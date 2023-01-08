@@ -9,7 +9,8 @@ A very bad oscilloscope!
     - [Capturing a trace](#capturing-a-trace)
     - [Visualizing the results](#visualizing-the-results)
     - [Roll mode](#roll-mode)
-    - [Edge triggering](#edge-triggering)
+    - [Triggering](#Triggering)
+      - [Edge triggering](#edge-triggering)
     - [Exporting data for analysis](#exporting-data-for-analysis)
 - [Is this product reliable?](#is-this-product-reliable)
 
@@ -106,23 +107,38 @@ Both the [Capturing a trace](#capturing-a-trace) and [Visualizing the results](#
 sections depicted the use of the `roll` command as examples. In "roll mode," no triggering occurs. The device
 simply captures the first `-n` or `--record-length` number of reads and transmits this data to the host upon
 read termination. This mode is useful for probing the characteristics of a waveform of interest such that an
-appropriate trigger type and level (or delta) can be chosen.
+appropriate trigger type and level (or delta) can be chosen. This section segues very nicely to the next
+section: [Triggering](#triggering).
 
-### Edge triggering
+### Triggering
+An oscilloscope is not complete without triggering. As such, this software comes with several trigger types:
+
+#### Edge triggering
+Square waves are commonly encountered in digital electronics. Once a wave has been identified as being square
+in nature, a user may set an edge trigger on the wave in order to capture a "waveform." The `edge` command
+comes in handy here:
+```
+python3 src/py/runner.py edge -n 200 -r 1200000 -p -q /tmp/example_edge_rising.png
+```
+In this mode, data acquisition began immediately upon the sharp transition of the wave from 0V to >4V:
+<p align="center">
+  <img src=./docs/example_edge_rising.png>
+</p>
+
 By default, the `edge` command triggers on a rising edge. To trigger on a falling edge, pass the `falling`
 argument to `--trigger` instead:
 ```
-python3 src/py/runner.py edge -n 200 -r 1200000 --trigger=falling -p -q /tmp/example_plotting_falling.png`
+python3 src/py/runner.py edge -n 200 -r 1200000 --trigger=falling -p -q /tmp/example_edge_falling.png
 ```
-In edge triggered mode, the device will begin data acquisition when a sufficient delta exists between two
-reads. This delta is 4 volts by default. On a falling edge trigger, note that data acquisition began only
-after the voltage drop exceeded 4 volts between two reads:
+In this case, data acquisition began immediately upon the transition of the wave from >4V to 0V:
 <p align="center">
-  <img src=./docs/example_plotting_falling.png>
+  <img src=./docs/example_edge_falling.png>
 </p>
 
-The trigger delta can be adjusted using the `-d` or `--delta` argument. The device will wait indefinitely for
-a trigger so an appropriate delta must be chosen.
+The transition that forces the trigger is termed the "delta" and can be specified via the `-d` or `--delta`
+argument. Note that the delta is relative - a transition for 5V to 1.5V on a falling edge trigger will result
+in data acquisition with `--delta=3`, for example, given that the difference between 5V and 1.5V exceeds the
+delta. The device will wait indefinitely for a trigger so an appropriate delta must be chosen.
 
 ### Exporting data for analysis
 For more accurate analysis, the data collected by the device can be exported to CSV format. For example, to
