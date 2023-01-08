@@ -21,7 +21,7 @@ namespace Command
             bool parse_edge_command_specific_indices();
             bool parse_trigger();
             bool parse_trigger_delta();
+            void wait_for_trigger();
             void start_reading_after_trigger();
-            void trigger();
     };
 }

@@ -75,6 +75,45 @@ bool Edge::parse_trigger_delta()
     return true;
 }
 
+void Edge::wait_for_trigger()
+{
+    int v_t_a = 0;
+    int v_t_b = ::analogRead(this->read_pin);
+
+    long uncorrected_period = this->measurement_duration / this->record_length;
+
+    if (this->trigger_type.equals("rising"))
+    {
+        while (true)
+        {
+            v_t_a = v_t_b;
+            v_t_b = ::analogRead(this->read_pin);
+
+            ::delayMicroseconds(uncorrected_period);
+
+            if ((v_t_b - v_t_a) >= this->trigger_delta)
+            {
+                break;
+            }
+        }
+    }
+    else
+    {
+        while (true)
+        {
+            v_t_a = v_t_b;
+            v_t_b = ::analogRead(this->read_pin);
+
+            ::delayMicroseconds(uncorrected_period);
+
+            if ((v_t_a - v_t_b) >= this->trigger_delta)
+            {
+                break;
+            }
+        }
+    }
+}
+
 void Edge::start_reading_after_trigger()
 {
     int v_t[this->record_length] = {0};
@@ -114,43 +153,6 @@ void Edge::start_reading_after_trigger()
     ::Serial.flush();
 }
 
-void Edge::trigger()
-{
-    int v_t_a = 0;
-    int v_t_b = ::analogRead(this->read_pin);
-
-    if (this->trigger_type.equals("rising"))
-    {
-        while (true)
-        {
-            v_t_a = v_t_b;
-            v_t_b = ::analogRead(this->read_pin);
-
-            ::delayMicroseconds(this->corrected_period);
-
-            if ((v_t_b - v_t_a) >= this->trigger_delta)
-            {
-                break;
-            }
-        }
-    }
-    else
-    {
-        while (true)
-        {
-            v_t_a = v_t_b;
-            v_t_b = ::analogRead(this->read_pin);
-
-            ::delayMicroseconds(this->corrected_period);
-
-            if ((v_t_a - v_t_b) >= this->trigger_delta)
-            {
-                break;
-            }
-        }
-    }
-}
-
 void Edge::acquire_data()
 {
     if (not this->parse_command_indices())
@@ -188,7 +190,8 @@ void Edge::acquire_data()
         return;
     }
 
-    this->trigger();
+    this->wait_for_trigger();
+    this->start_reading_after_trigger();
 }
 
 } // namespace Command
