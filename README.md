@@ -8,8 +8,8 @@ A very bad oscilloscope!
     - [Setting up the hardware](#setting-up-the-hardware)
     - [Capturing a trace](#capturing-a-trace)
     - [Visualizing the results](#visualizing-the-results)
-    - [Edge triggering](#edge-triggering)
     - [Roll mode](#roll-mode)
+    - [Edge triggering](#edge-triggering)
     - [Exporting data for analysis](#exporting-data-for-analysis)
 - [Is this product reliable?](#is-this-product-reliable)
 
@@ -101,6 +101,13 @@ Which will generate the following plot:
   <img src=./docs/example_roll.png>
 </p>
 
+### Roll mode
+Both the [Capturing a trace](#capturing-a-trace) and [Visualizing the results](#visualizing-the-results)
+sections depicted the use of the `roll` command as examples. In "roll mode," no triggering occurs. The device
+simply captures the first `-n` or `--record-length` number of reads and transmits this data to the host upon
+read termination. This mode is useful for probing the characteristics of a waveform of interest such that an
+appropriate trigger type and level (or delta) can be chosen.
+
 ### Edge triggering
 By default, the `edge` command triggers on a rising edge. To trigger on a falling edge, pass the `falling`
 argument to `--trigger` instead:
@@ -116,21 +123,6 @@ after the voltage drop exceeded 4 volts between two reads:
 
 The trigger delta can be adjusted using the `-d` or `--delta` argument. The device will wait indefinitely for
 a trigger so an appropriate delta must be chosen.
-
-### Roll mode
-This software comes packaged with an additional command: "roll mode." In this mode, no triggering occurs. The
-device simply captures the first `-n` or `--record-length` number of reads and transmits this data to the host
-upon read termination. For example:
-```
-python3 src/py/runner.py roll -n 200 -r 1200000 -p -q /tmp/example_roll.png
-```
-Returns:
-<p align="center">
-  <img src=./docs/example_roll.png>
-</p>
-
-This mode is useful for probing the characteristics of a waveform of interest such that an appropriate trigger
-type and level (or delta) can be chosen.
 
 ### Exporting data for analysis
 For more accurate analysis, the data collected by the device can be exported to CSV format. For example, to
