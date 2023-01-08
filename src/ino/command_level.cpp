@@ -96,9 +96,9 @@ bool Level::parse_epsilon()
         return false;
     }
 
-    if (this->epsilon < 10)
+    if (this->epsilon < 5)
     {
-        Helpers::error(F("Epsilon must be at least 0.05 volts!"));
+        Helpers::error(F("Epsilon must be at least 0.025 volts!"));
         return false;
     }
     else if (this->epsilon > 1023)
