@@ -110,11 +110,8 @@ bool Level::parse_epsilon()
     return true;
 }
 
-void Level::trigger()
+void Level::wait_for_trigger()
 {
-    int v_t[this->record_length] = {0};
-    unsigned long time_usec[this->record_length] = {0};
-
     int v_t_a = 0;
     int v_t_b = ::analogRead(this->read_pin);
 
@@ -122,77 +119,79 @@ void Level::trigger()
     // See notes and warnings - not a good idea to compute delta inside abs
     int delta = 0;
 
-    unsigned long t = 0;
-
-    bool count = false;
-    unsigned int idx = 0;
+    long uncorrected_period = this->measurement_duration / this->record_length;
 
     if (this->trigger_type.equals("rising"))
     {
-        while (idx < this->record_length)
+        while (true)
         {
             v_t_a = v_t_b;
             v_t_b = ::analogRead(this->read_pin);
 
-            t = ::micros();
-            ::delayMicroseconds(this->corrected_period);
+            ::delayMicroseconds(uncorrected_period);
 
             delta = v_t_b - this->trigger_level;
 
             if ((v_t_a < v_t_b) and (abs(delta) <= this->epsilon))
             {
-                count = true;
-            }
-
-            if (count)
-            {
-                time_usec[idx] = t;
-                v_t[idx] = v_t_b;
-                ++idx;
+                break;
             }
         }
     }
     else
     {
-        while (idx < this->record_length)
+        while (true)
         {
             v_t_a = v_t_b;
             v_t_b = ::analogRead(this->read_pin);
 
-            t = ::micros();
-            ::delayMicroseconds(this->corrected_period);
+            ::delayMicroseconds(uncorrected_period);
 
             delta = v_t_b - this->trigger_level;
 
             if ((v_t_a > v_t_b) and (abs(delta) <= this->epsilon))
             {
-                count = true;
-            }
-
-            if (count)
-            {
-                time_usec[idx] = t;
-                v_t[idx] = v_t_b;
-                ++idx;
+                break;
             }
         }
     }
+}
+
+void Level::start_reading_after_trigger()
+{
+    int v_t[this->record_length] = {0};
+    unsigned long time_usec[this->record_length] = {0};
+
+    unsigned int idx = 0;
+
+    while (idx < this->record_length)
+    {
+        time_usec[idx] = ::micros();
+        v_t[idx] = ::analogRead(this->read_pin);
+        ++idx;
+
+        ::delayMicroseconds(this->corrected_period);
+    }
 
     ::Serial.print(F("1;"));
+
     for (unsigned int i = 0; i < this->record_length; ++i)
     {
         ::Serial.print(v_t[i]);
         ::Serial.print(' ');
     }
+
     ::Serial.println();
     ::Serial.flush();
 
     ::Serial.print(F("1;"));
+
     for (unsigned int i = 0; i < this->record_length; ++i)
     {
         ::Serial.print(time_usec[i]);
         ::Serial.print(' ');
     }
+
     ::Serial.println();
     ::Serial.flush();
 }
@@ -239,7 +238,8 @@ void Level::acquire_data()
         return;
     }
 
-    this->trigger();
+    this->wait_for_trigger();
+    this->start_reading_after_trigger();
 }
 
 } // namespace Command

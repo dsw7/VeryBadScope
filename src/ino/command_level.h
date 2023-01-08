@@ -24,6 +24,7 @@ namespace Command
             bool parse_trigger();
             bool parse_trigger_level();
             bool parse_epsilon();
-            void trigger();
+            void wait_for_trigger();
+            void start_reading_after_trigger();
     };
 }
