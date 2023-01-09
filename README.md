@@ -116,9 +116,9 @@ section: [Triggering](#triggering).
 An oscilloscope is not complete without triggering. As such, this software comes with several trigger types:
 
 #### Edge triggering
-Square waves are commonly encountered in digital electronics. Once a wave has been identified as being square
-in nature, a user may set an edge trigger on the wave in order to capture a "waveform." The `edge` command
-comes in handy here:
+Pulse waves are commonly encountered in digital electronics. Once a wave has been identified as being either
+rectangular or square in nature, a user may set an edge trigger on the wave in order to capture a "waveform."
+The `edge` command comes in handy here:
 ```
 python3 src/py/runner.py edge -n 200 -r 1200000 -p -q /tmp/example_edge_rising.png
 ```
@@ -144,7 +144,7 @@ delta. The device will wait indefinitely for a trigger so an appropriate delta m
 
 #### Level triggering
 Many waves do not alternate between fixed minima and maxima - sinusoids and decaying exponentials immediately
-come to mind. Such waves do not wave an "edge" that can be used as a trigger. In this case, a level must
+come to mind. Such waves do not possess an "edge" that can be used as a trigger. In this case, a level must
 instead be used as a trigger. First, start by dispatching a `roll` command in order to study the wave:
 <p align="center">
   <img src=docs/example_roll_charging_discharging.png>
