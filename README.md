@@ -259,6 +259,24 @@ $$
 D_e = 100\times(\frac{99.8 + R_2}{99.8 + 2R_2})
 $$
 
+Each trace consisted of a record length of 250 and a measurement duration of 250 milliseconds. The raw data
+(`benchmark/*raw.csv`) was clipped to consist of only one period (`benchmark/*clipped.csv`) with clipping
+starting on the first rising edge and ending on the next rising edge. Benchmarking was performed by observing
+the duty cycle as opposed to the output frequency simply because the duty cycle does not depend on the
+capacitance $C$, and it is very easy to accurately measure the resistances $R_1$ and $R_2$. The results of the
+benchmark follow:
+
+| $R_1\ k\Omega$ | $R_2\ k\Omega$ | $C\ (\mu F)$ | $D_a$ | $D_e$ |
+| -------------- | -------------- | ------------ | ----- | ----- |
+| 99.8           | 9.82           | 1            | 91.7  | 91.8  |
+| 99.8           | 14.48          | 1            | 88.9  | 88.8  |
+| 99.8           | 21.6           | 1            | 84.7  | 84.9  |
+| 99.8           | 26.27          | 1            | 82.2  | 82.8  |
+| 99.8           | 31.5           | 1            | 80.6  | 80.7  |
+| 99.8           | 36.0           | 1            | 79.1  | 79.1  |
+| 99.8           | 46.2           | 1            | 75.9  | 76.0  |
+
+
 The values for $R_1$, $R_2$ and $C$ were measured for the above circuit and follow:
 
 | Component | Value           | Value in SI units         |
