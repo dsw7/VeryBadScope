@@ -275,3 +275,8 @@ benchmark follow:
 | 99.8             | 31.5             | 1            | 80.6  | 80.7  |
 | 99.8             | 36.0             | 1            | 79.1  | 79.1  |
 | 99.8             | 46.2             | 1            | 75.9  | 76.0  |
+
+In graphical form:
+<p align="center">
+  <img src=benchmark/benchmark.png>
+</p>
