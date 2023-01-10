@@ -280,3 +280,6 @@ In graphical form:
 <p align="center">
   <img src=benchmark/benchmark.png>
 </p>
+
+From this analysis, we can see that the observed duty cycles are remarkably consistent with their theoretical
+counterparts, indicating that this device is capable of surprisingly accurate measurement.
