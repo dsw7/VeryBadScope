@@ -1,29 +1,16 @@
-# R1 is 99.8 kOhm
-# R2s are located in the filename -> 9_82_clipped.csv means 9.82 kOhm
-# "Clipped" means data was between the first rising edge and the next rising edge
-# C was 1 uF
-# Read 250 times over 250000 usec
-
 import matplotlib.pyplot as plt
 from numpy import linspace
 
 FILES_TO_ANALYZE = [
-    '9_82_clipped.csv',
-    '14_48_clipped.csv',
-    '21_6_clipped.csv',
-    '26_27_clipped.csv',
-    '31_5_clipped.csv',
-    '36_0_clipped.csv',
-    '46_2_clipped.csv'
+    '9_82_clipped.csv', '14_48_clipped.csv', '21_6_clipped.csv', '26_27_clipped.csv',
+    '31_5_clipped.csv', '36_0_clipped.csv', '46_2_clipped.csv'
 ]
 
 PLOT_WIDTH_INCHES = 6
 PLOT_HEIGHT_INCHES = 4
 PLOT_DPI = 80
-
 R1 = 99.8
 R2_VALUES = [9.82, 14.48, 21.6, 26.27, 31.5, 36.0, 46.2]
-# EXPECTED_DUTY_CYCLES = [91.8, 88.8, 84.9, 82.8, 80.7, 79.1, 76.0]
 
 def get_duty_cycle(csvfile: str) -> float:
 

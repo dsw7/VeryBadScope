@@ -266,29 +266,12 @@ the duty cycle as opposed to the output frequency simply because the duty cycle 
 capacitance $C$, and it is very easy to accurately measure the resistances $R_1$ and $R_2$. The results of the
 benchmark follow:
 
-| $R_1\ k\Omega$ | $R_2\ k\Omega$ | $C\ (\mu F)$ | $D_a$ | $D_e$ |
-| -------------- | -------------- | ------------ | ----- | ----- |
-| 99.8           | 9.82           | 1            | 91.7  | 91.8  |
-| 99.8           | 14.48          | 1            | 88.9  | 88.8  |
-| 99.8           | 21.6           | 1            | 84.7  | 84.9  |
-| 99.8           | 26.27          | 1            | 82.2  | 82.8  |
-| 99.8           | 31.5           | 1            | 80.6  | 80.7  |
-| 99.8           | 36.0           | 1            | 79.1  | 79.1  |
-| 99.8           | 46.2           | 1            | 75.9  | 76.0  |
-
-
-The values for $R_1$, $R_2$ and $C$ were measured for the above circuit and follow:
-
-| Component | Value           | Value in SI units         |
-|:---------:|-----------------|---------------------------|
-| $R_1$     | 99.8 $k\Omega$  | 99800.0 $\Omega$          |
-| $R_2$     | 21.60 $k\Omega$ | 21600.00 $\Omega$         |
-| $C$       | 9.52 $\mu F$    | 9.52 $\times$ $10^6$ $F$  |
-
-Inputting these values into the definition of $f$ yields a theoretical frequency of 1.06 $s^{-1}$.
-Correspondingly, the theoretical duty cycle $D$ is 0.849. These values align reasonably with the actual output
-of this device:
-
-<p align="center">
-  <img width="650" src=docs/example.png>
-</p>
+| $R_1\ (k\Omega$) | $R_2\ (k\Omega$) | $C\ (\mu F)$ | $D_a$ | $D_e$ |
+| ---------------- | ---------------- | ------------ | ----- | ----- |
+| 99.8             | 9.82             | 1            | 91.7  | 91.8  |
+| 99.8             | 14.48            | 1            | 88.9  | 88.8  |
+| 99.8             | 21.6             | 1            | 84.7  | 84.9  |
+| 99.8             | 26.27            | 1            | 82.2  | 82.8  |
+| 99.8             | 31.5             | 1            | 80.6  | 80.7  |
+| 99.8             | 36.0             | 1            | 79.1  | 79.1  |
+| 99.8             | 46.2             | 1            | 75.9  | 76.0  |
