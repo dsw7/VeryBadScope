@@ -256,7 +256,7 @@ $k\Omega$ and 1 $\mu F$, respectively. Traces were collected for varying $R_2$ v
 duty cycle $D_a$ was computed. $D_a$ was then compared against the theoretical duty cycle, $D_e$:
 
 $$
-D_e = \frac{99.8 + R_2}{99.8 + 2R_2}
+D_e = 100\times(\frac{99.8 + R_2}{99.8 + 2R_2})
 $$
 
 The values for $R_1$, $R_2$ and $C$ were measured for the above circuit and follow:
