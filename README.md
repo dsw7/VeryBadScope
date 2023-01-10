@@ -278,7 +278,7 @@ benchmark follow:
 
 In graphical form:
 <p align="center">
-  <img src=benchmark/benchmark.png>
+  <img width="720" src=benchmark/benchmark.png>
 </p>
 
 From this analysis, we can see that the observed duty cycles are remarkably consistent with their theoretical
