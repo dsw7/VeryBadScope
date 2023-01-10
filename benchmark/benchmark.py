@@ -42,7 +42,7 @@ def main() -> None:
     plt.legend(fontsize=15)
     plt.xlabel('$R_2\ (k\Omega)$', fontsize=15)
     plt.ylabel('$D$', fontsize=15)
-    plt.savefig(PLOT_NAME)
+    plt.savefig(PLOT_NAME, bbox_inches='tight')
 
 if __name__ == '__main__':
     main()
