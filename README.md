@@ -251,6 +251,14 @@ $$
 D = \frac{R_1 + R_2}{R_1 + 2R_2}
 $$
 
+To benchmark this device, a 555 timer circuit was constructed with $R_1$ and $C$ held constant, at 99.8
+$k\Omega$ and 1 $\mu F$, respectively. Traces were collected for varying $R_2$ values and for each trace, the
+duty cycle $D_a$ was computed. $D_a$ was then compared against the theoretical duty cycle, $D_e$:
+
+$$
+D_e = \frac{99.8 + R_2}{99.8 + 2R_2}
+$$
+
 The values for $R_1$, $R_2$ and $C$ were measured for the above circuit and follow:
 
 | Component | Value           | Value in SI units         |
