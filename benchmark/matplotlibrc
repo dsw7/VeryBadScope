@@ -1,0 +1,11 @@
+axes.spines.right: False
+axes.spines.top: False
+
+text.usetex: True
+font.family: sans-serif
+font.sans-serif: Helvetica
+
+savefig.dpi: 80
+figure.figsize: 6, 4
+
+legend.frameon: False
