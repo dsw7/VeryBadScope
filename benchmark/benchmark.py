@@ -39,10 +39,10 @@ def main() -> None:
     expected_duty_cycles = [get_theoretical(t) for t in R2_LINSPACE]
     plt.plot(R2_LINSPACE, expected_duty_cycles, ls='--', label='$D_e$')
 
-    plt.legend(fontsize=15)
-    plt.xlabel('$R_2\ (k\Omega)$', fontsize=15)
-    plt.ylabel('$D$', fontsize=15)
-    plt.savefig(PLOT_NAME, bbox_inches='tight')
+    plt.legend(fontsize=13)
+    plt.xlabel('$R_2\ (k\Omega)$', fontsize=13)
+    plt.ylabel('$D$', fontsize=13)
+    plt.savefig(PLOT_NAME)
 
 if __name__ == '__main__':
     main()
