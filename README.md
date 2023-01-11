@@ -1,7 +1,8 @@
 # VeryBadScope
-A very bad oscilloscope!
+Actually, a surprisingly good oscilloscope given the low cost of the hardware!
 ## Table of Contents
 - [Setup](#setup)
+    - [Python requirements](#python-requirements)
     - [Uploading code to device](#uploading-code-to-device)
     - [Handshaking with the device](#handshaking-with-the-device)
 - [Usage](#usage)
@@ -15,8 +16,25 @@ A very bad oscilloscope!
       - [Exact level triggering](#exact-level-triggering)
     - [Exporting data for analysis](#exporting-data-for-analysis)
 - [Is this product reliable?](#is-this-product-reliable)
+- [Testing](#testing)
 
 ## Setup
+
+### Hardware requirements
+While optional, it is strongly recommended to install [arduino-cli](https://github.com/arduino/arduino-cli).
+This project's build system is based upon `arduino-cli`. To install `arduino-cli`, follow the
+[Quickstart](https://github.com/arduino/arduino-cli#quickstart) section provided by the `arduino-cli`
+developers. Alternatively, the `src/ino/ino.ino` "sketch" can be manually uploaded to the device via the
+Arduino IDE.
+
+### Python requirements
+This project's command line interface is written in Python and uses several Python libraries. These libraries
+must be installed. To install the libraries:
+```
+python3 -m pip install --user --requirement requirements.txt
+```
+Note that these requirements only cover the CLI. Additional requirements are required to run the unit tests,
+if one chooses to run the tests (see [Testing](#testing)).
 
 ### Uploading code to device
 The code located in this repository must be uploaded to the device. To upload the code, run the `upload`
@@ -283,3 +301,10 @@ In graphical form:
 
 From this analysis, we can see that the observed duty cycles are remarkably consistent with their theoretical
 counterparts, indicating that this device is capable of surprisingly accurate measurement.
+
+## Testing
+To run unit tests, run the following `make` target:
+```
+make test SERIAL_PORT=<serial-port>
+```
+Note that this assumes that `pytest` is installed.
