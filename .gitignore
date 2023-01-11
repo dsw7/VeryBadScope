@@ -5,6 +5,3 @@ __pycache__/
 
 # C extensions
 *.so
-
-# Requirements
-requirements.txt
