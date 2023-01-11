@@ -28,6 +28,13 @@ This project's build system is based upon `arduino-cli`. To install `arduino-cli
 developers. Alternatively, the `src/ino/ino.ino` "sketch" can be manually uploaded to the device via the
 Arduino IDE.
 
+If using `arduino-cli`, ensure that the Fully Qualified Board Name (FQBN) variable is updated in the
+`Makefile`. This project was built atop an Uno which is reflected in the `Makefile`. If not working with an
+Uno, change the FQBN as follows:
+```
+sed -i 's/FULLY_QUALIFIED_BOARD_NAME = arduino:avr:uno/FULLY_QUALIFIED_BOARD_NAME = <your-fqbn>/' Makefile
+```
+
 ### Python requirements
 This project's command line interface is written in Python and uses several Python libraries. These libraries
 must be installed. To install the libraries:
