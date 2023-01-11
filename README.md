@@ -2,6 +2,7 @@
 Actually, a surprisingly good oscilloscope given the low cost of the hardware!
 ## Table of Contents
 - [Setup](#setup)
+    - [Hardware requirements](#hardware-requirements)
     - [Python requirements](#python-requirements)
     - [Uploading code to device](#uploading-code-to-device)
     - [Handshaking with the device](#handshaking-with-the-device)
