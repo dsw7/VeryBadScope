@@ -18,6 +18,7 @@ Actually, a surprisingly good oscilloscope given the low cost of the hardware!
     - [Exporting data for analysis](#exporting-data-for-analysis)
 - [Is this product reliable?](#is-this-product-reliable)
 - [Testing](#testing)
+- [Limitations of this device](#limitations-of-this-device)
 
 ## Setup
 
@@ -316,3 +317,72 @@ To run unit tests, run the following `make` target:
 make test SERIAL_PORT=<serial-port>
 ```
 Note that this assumes that `pytest` is installed.
+
+## Limitations of this device
+The ATmega328 microcontroller comes with only 2048 bytes of static RAM. This is a very small amount, and the
+majority of this space is used to store waveform data. In order to maximize the amount of space available,
+this software moves most string literals to FLASH memory on start using the `F()` macro. Even with this
+optimization, the device is limited to a record length of about 250 reads. Attempting to load the waveform
+buffer with any more reads may begin to yield some anomalous behavior. For example, running a `roll` command
+with `--debug` shows:
+```
+$ python3 src/py/runner.py --debug roll -n 250 -r 250000
+> Reading data from device
+Connecting using parameters:
+{
+    "baudrate": 19200,
+    "parity": "N",
+    "stopbits": 1,
+    "bytesize": 8,
+    "timeout": 5,
+    "port": "/dev/ttyS2"
+}
+DTR (Data Terminal Ready) was sent. Waiting for device to reset
+Sending message: "roll:250:250000"
+Sent 15 bytes
+Waiting to receive message...
+Received message: b'1;1023 1023 1023 1023 1023 1021 1017 101'...
+...
+```
+This is a normal result. But at 270 reads:
+```
+$ python3 src/py/runner.py --debug roll -n 270 -r 250000
+> Reading data from device
+Connecting using parameters:
+{
+    "baudrate": 19200,
+    "parity": "N",
+    "stopbits": 1,
+    "bytesize": 8,
+    "timeout": 5,
+    "port": "/dev/ttyS2"
+}
+DTR (Data Terminal Ready) was sent. Waiting for device to reset
+Sending message: "roll:270:250000"
+Sent 15 bytes
+Waiting to receive message...
+Received message: b'p\xed1;1023 1023 1023 1023 1023 1021 1017 1'...
+...
+An exception occurred when decoding results: "'utf-8' codec can't decode byte 0xed in position 1: invalid continuation byte"
+```
+Note the unusual byte that was received. By 280 reads the device can no longer return valid data:
+```
+$ python3 src/py/runner.py --debug roll -n 280 -r 250000
+> Reading data from device
+2023-01-12 02:40:42.811 Connecting using parameters:
+{
+    "baudrate": 19200,
+    "parity": "N",
+    "stopbits": 1,
+    "bytesize": 8,
+    "timeout": 5,
+    "port": "/dev/ttyS2"
+}
+2023-01-12 02:40:42.828 DTR (Data Terminal Ready) was sent. Waiting for device to reset
+2023-01-12 02:40:44.834 Sending message: "roll:280:250000"
+2023-01-12 02:40:44.835 Sent 15 bytes
+2023-01-12 02:40:44.835 Waiting to receive message...
+2023-01-12 02:40:50.145 Received message: b'\x00\xff1;0 0 0 0 0 0 0 0 \x0e\x8e\x01o\xb9V\x0f\x0f\x02\x90\x02\xbe\x03\x0f\x02\x0f\x02k\x00\x0f'
+...
+An exception occurred when decoding results: "'utf-8' codec can't decode byte 0xff in position 1: invalid start byte"
+```
