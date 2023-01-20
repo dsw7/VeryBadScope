@@ -4,6 +4,6 @@
 
 namespace Helpers
 {
-    void info(const String &message);
-    void error(const String &message);
+    void info(const ::String &message);
+    void error(const ::String &message);
 }
