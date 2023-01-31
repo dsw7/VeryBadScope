@@ -61,6 +61,17 @@ class SerialConnection:
         self.logger.debug('DTR (Data Terminal Ready) was sent. Waiting for device to reset')
         sleep(2)
 
+        self.logger.info('Device ready to accept instructions!')
+
+        self.send_message('hello')
+        status, message = self.receive_message()
+
+        if not status:
+            sys.exit(f'Failed to connect on handshake: {message}')
+
+        if message != 'Hello from InoDAQ2. I should blink 5 times!':
+            sys.exit('Handshake returned unrecognized message. Is the right code uploaded to device?')
+
         return self
 
     def __exit__(self: T, *args) -> None:
