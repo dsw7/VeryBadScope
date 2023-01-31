@@ -317,6 +317,14 @@ counterparts, indicating that this device is capable of surprisingly accurate me
 
 ### Testing against Rigol DS1054Z
 
+<p align="center">
+  <img src=benchmark/rigol/very_bad_scope.png>
+</p>
+
+<p align="center">
+  <img src=benchmark/rigol/rigol_1054z.png>
+</p>
+
 ## Testing
 To run unit tests, run the following `make` target:
 ```
