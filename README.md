@@ -17,6 +17,8 @@ Actually, a surprisingly good oscilloscope given the low cost of the hardware!
       - [Exact level triggering](#exact-level-triggering)
     - [Exporting data for analysis](#exporting-data-for-analysis)
 - [Is this product reliable?](#is-this-product-reliable)
+    - [Manual testing](#manual-testing)
+    - [Testing against Rigol DS1054Z](#testing-against-rigol-ds1054z)
 - [Testing](#testing)
 - [Limitations of this device](#limitations-of-this-device)
 
@@ -256,6 +258,8 @@ Time (microseconds),Voltage (volts)
 A custom CSV export path can be specified via `--csv-path`.
 
 ## Is this product reliable?
+
+### Manual testing
 This product was tested using the classic 555 timer ([TI
 NE555P](https://www.ti.com/product/NE555/part-details/NE555P) to be exact) wired in an astable multivibrator
 configuration. The circuit follows:
@@ -310,6 +314,8 @@ In graphical form:
 
 From this analysis, we can see that the observed duty cycles are remarkably consistent with their theoretical
 counterparts, indicating that this device is capable of surprisingly accurate measurement.
+
+### Testing against Rigol DS1054Z
 
 ## Testing
 To run unit tests, run the following `make` target:
