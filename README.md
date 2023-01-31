@@ -329,8 +329,9 @@ measure the output wave using this software. The output follows:
   <img src=benchmark/rigol/very_bad_scope.png>
 </p>
 
-The rising edge-to-rising edge period was measured at 50.52 milliseconds by inspecting a CSV corresponding to
-the above trace. This period represents a 0.554% difference from the value obtained from the Rigol DS1054Z.
+The rising edge-to-rising edge period was measured at 50.42 milliseconds by inspecting a CSV corresponding to
+the above trace. This period represents a 0.554% difference from the 50.70 millisecond period obtained from
+the Rigol DS1054Z.
 
 ## Testing
 To run unit tests, run the following `make` target:
