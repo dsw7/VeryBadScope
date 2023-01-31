@@ -316,13 +316,17 @@ From this analysis, we can see that the observed duty cycles are remarkably cons
 counterparts, indicating that this device is capable of surprisingly accurate measurement.
 
 ### Testing against Rigol DS1054Z
-
-<p align="center">
-  <img src=benchmark/rigol/very_bad_scope.png>
-</p>
-
+As before, a 555 timer was set up in an astable multivibrator configuration. $R_1$ and $R_2$ were 99.8 and
+21.6 $k\Omega$, respectively. $C$ was 0.47 $\mu F$. The output was a 19.7 Hz rectangular wave as measured
+using a Rigol DS1054Z oscilloscope:
 <p align="center">
   <img src=benchmark/rigol/rigol_1054z.png>
+</p>
+
+The DS1054Z was set to 10 ms per division with falling edge triggering. Identical conditions were used to
+measure the output wave using this software. The output follows:
+<p align="center">
+  <img src=benchmark/rigol/very_bad_scope.png>
 </p>
 
 ## Testing
